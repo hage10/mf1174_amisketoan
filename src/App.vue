@@ -50,6 +50,7 @@ export default {
       this.popupText = a.split("###")[0];
       this.popupType = a.split("###")[1];
       this.listButton = a.split("###")[2];
+      this.modeForPopup = a.split("###")[3];
     });
     //lắng nghe sự kiện closePopup để đóng popup
     this.emitter.on("closePopup", (isShowPopup) => {

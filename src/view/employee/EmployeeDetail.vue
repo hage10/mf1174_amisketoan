@@ -65,8 +65,7 @@
               </div>
               <div class="prop-item">
                 <p>Giới tính</p>
-
-                <RadioButtonGroup />
+                <RadioButtonGroup v-model="employeeModel.Gender" />
               </div>
             </div>
           </div>
@@ -89,17 +88,26 @@
                     touched.departmentId
                   "
                   :reSelect="reSelectCbb"
+                  v-model="employeeModel.DepartmentName"
                 />
               </div>
             </div>
             <div class="hatf-row-dialog">
               <div class="prop-item">
                 <p>Số CMND</p>
-                <input type="text" class="m-input input-w-4" />
+                <input
+                  type="text"
+                  class="m-input input-w-4"
+                  v-model="employeeModel.IdentityNumber"
+                />
               </div>
               <div class="prop-item">
                 <p>Ngày cấp</p>
-                <input type="date" class="m-input input-w-2" />
+                <input
+                  type="date"
+                  class="m-input input-w-2"
+                  v-model="employeeModel.IdentityDate"
+                />
               </div>
             </div>
           </div>
@@ -107,13 +115,21 @@
             <div class="hatf-row-dialog">
               <div class="prop-item">
                 <p>Chức danh</p>
-                <input type="text" class="m-input input-w-6" />
+                <input
+                  type="text"
+                  class="m-input input-w-6"
+                  v-model="employeeModel.PositionName"
+                />
               </div>
             </div>
             <div class="hatf-row-dialog">
               <div class="prop-item">
                 <p>Nơi cấp</p>
-                <input type="text" class="m-input input-w-6" />
+                <input
+                  type="text"
+                  class="m-input input-w-6"
+                  v-model="employeeModel.IdentityPlace"
+                />
               </div>
             </div>
           </div>
@@ -122,35 +138,63 @@
           <div class="dialog-row">
             <div class="prop-item">
               <p>Địa chỉ</p>
-              <input type="text" class="m-input input-w-12" />
+              <input
+                type="text"
+                class="m-input input-w-12"
+                v-model="employeeModel.Address"
+              />
             </div>
           </div>
           <div class="dialog-row-lite">
             <div class="prop-item w-205">
               <p>Điện thoại di động</p>
-              <input type="text" class="m-input input-w-3" />
+              <input
+                type="text"
+                class="m-input input-w-3"
+                v-model="employeeModel.PhoneNumber"
+              />
             </div>
             <div class="prop-item w-205">
               <p>Điện thoại cố định</p>
-              <input type="text" class="m-input input-w-3" />
+              <input
+                type="text"
+                class="m-input input-w-3"
+                v-model="employeeModel.TelephoneNumber"
+              />
             </div>
             <div class="prop-item w-205">
               <p>Email</p>
-              <input type="text w-205" class="m-input input-w-3" />
+              <input
+                type="text w-205"
+                class="m-input input-w-3"
+                v-model="employeeModel.Email"
+              />
             </div>
           </div>
           <div class="dialog-row-lite">
             <div class="prop-item w-205">
               <p>Tài khoản ngân hàng</p>
-              <input type="text" class="m-input input-w-3" />
+              <input
+                type="text"
+                class="m-input input-w-3"
+                v-model="employeeModel.BankAccountNumber"
+              />
             </div>
             <div class="prop-item w-205">
               <p>Tên ngân hàng</p>
-              <input type="text" class="m-input input-w-3" />
+              <input
+                type="text"
+                class="m-input input-w-3"
+                v-model="employeeModel.BankName"
+              />
             </div>
             <div class="prop-item w-205">
               <p>Chi nhánh</p>
-              <input type="text" class="m-input input-w-3" />
+              <input
+                type="text"
+                class="m-input input-w-3"
+                v-model="employeeModel.BankBranchName"
+              />
             </div>
           </div>
         </div>
@@ -188,6 +232,7 @@ import EmployeeApi from "@/api/entities/EmployeeApi.js";
 import DepartmentApi from "@/api/entities/DepartmentApi.js";
 import { required, helpers } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import { EmployeeModel } from "@/models/EmployeeModels";
 
 export default {
   name: "EmployeeDialog",
@@ -229,6 +274,21 @@ export default {
       employeeModel: {},
       // biến truyền vào thông báo combobox thay đổi lựa chọn
       reSelectCbb: false,
+            // các option của giới tính
+      genderOptions: [
+        {
+          id: 1,
+          name: "Nam",
+        },
+        {
+          id: 0,
+          name: "Nữ",
+        },
+        {
+          id: 2,
+          name: "Khác",
+        },
+        ],
     };
   },
   /**
@@ -260,7 +320,7 @@ export default {
     btnXOnClick() {
       this.$emit("closeForm");
     },
-    async save() {
+    async save(mode) {
       //bắt đầu thực hiện check validate trước khi hiện cất và thêm
       this.touched = {
         employeeCode: true,
@@ -272,15 +332,36 @@ export default {
         //sự kiện gửi thông tin thông tin lỗi cho popup
         this.emitter.emit(
           "showPopup",
-          this.v$.$silentErrors[0].$message + "###warning###t"
+          this.v$.$silentErrors[0].$message + "###warning###t###xoa"
         );
       } else {
         //thực hiện post dữ liệu khi các trường đã được nhập đủ
         console.log(this.employee);
         EmployeeApi.add(this.employeeModel)
-          .then((res) => {
+          .then(async (res) => {
             console.log(res);
             this.emitter.emit("showMes", "Thêm mới thành công!###success");
+            this.emitter.emit("load");
+            if (mode == "save") {
+              this.$emit("closeForm");
+            } else if (mode == "saveandadd") {
+              let newEmployeeCode;
+              await EmployeeApi.getNewCode()
+                .then((res) => {
+                  newEmployeeCode = res.data;
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              this.employeeModel = Object.assign({},EmployeeModel);
+              this.employeeModel.EmployeeCode = newEmployeeCode;
+              this.touched = {
+                employeeCode: false,
+                employeeName: false,
+                departmentId: false,
+              };
+              this.$refs.txtEmployeeCodeRef.focus();
+            }
           })
           .catch((err) => {
             if (
@@ -304,7 +385,9 @@ export default {
      * Ấn button cất và thêm trong form thêm mới nhân viên
      * author: TrungTQ (20/06/2022)
      */
-    async btnSaveAndAddOnClick() {},
+    async btnSaveAndAddOnClick() {
+      this.save("saveandadd");
+    },
     // các hàm sử sụng cho combobox
     comboboxOnSelect(cbbValue) {
       this.employeeModel.DepartmentId = cbbValue;

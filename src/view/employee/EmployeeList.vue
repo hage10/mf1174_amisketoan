@@ -92,26 +92,33 @@ export default {
       this.dialogMode = "edit";
       this.myEmployeeId = id;
     },
+    load() {
+      /**
+       * Gọi api lấy dữ liệu
+       * Author: TrungTQ(18/06/2022)
+       */
+      try {
+        var me = this;
+        EmployeeApi.getAll()
+          .then(function (emp) {
+            me.tableDataList = emp.data;
+            console.log(emp);
+          })
+          .catch(function (emp) {
+            console.log(emp);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 
   created() {
-    /**
-     * Gọi api lấy dữ liệu
-     * Author: TrungTQ(18/06/2022)
-     */
-    try {
-      var me = this;
-      EmployeeApi.getAll()
-        .then(function (emp) {
-          me.tableDataList = emp.data;
-          console.log(emp);
-        })
-        .catch(function (emp) {
-          console.log(emp);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    this.load();
+
+    this.emitter.on("load", () => {
+      this.load();
+    });
   },
 };
 </script>

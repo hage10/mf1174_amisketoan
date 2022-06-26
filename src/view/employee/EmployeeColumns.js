@@ -34,6 +34,20 @@ export const employeeColumns = [{
         style: "text-align: left",
     },
     {
+        fieldName: "IdentityDate",
+        displayName: "NGÀY CẤP",
+        formatType: "",
+        width: "min-width: 150px;",
+        style: "text-align: left",
+    },
+    {
+        fieldName: "IdentityPlace",
+        displayName: "NƠI CẤP",
+        formatType: "",
+        width: "min-width: 160px;",
+        style: "text-align: left",
+    },
+    {
         fieldName: "EmployeePosition",
         displayName: "CHỨC DANH",
         formatType: "",
