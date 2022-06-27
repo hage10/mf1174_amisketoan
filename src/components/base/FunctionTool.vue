@@ -42,12 +42,19 @@ export default {
       this.emitter.emit("hideFunctionList");
       setTimeout(() => {
         // EventBus.$emit('showFunctionList', positionStr, this.toolId, this.toolCode);
-        this.emitter.emit("showFunctionList",  `${positionStr}###${this.toolId}###${this.toolCode}`);
+        this.emitter.emit(
+          "showFunctionList",
+          `${positionStr}###${this.toolId}###${this.toolCode}`
+        );
       }, 200);
     },
-  },
-  created() {
-    
+    /**
+     * Sự kiên khi click vào btn sửa
+     * Author HieuNV
+     * */
+    btnEditOnClick() {
+      this.emitter.emit("btnEditOnClick", this.toolId);
+    },
   },
 };
 </script>

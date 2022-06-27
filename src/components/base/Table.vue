@@ -91,15 +91,13 @@
             :style="column.style"
             :title="item[column.fieldName]"
           >
-            <p v-if="column.formatType == 'money'">
-              {{ formatSalary(item[column.fieldName]) }}
-            </p>
-            <p v-else-if="column.formatType == 'ddmmyyyy'">
+
+            <p v-if="column.formatType == 'ddmmyyyy'">
               {{ formatDate(item[column.fieldName]) }}
             </p>
-            <p v-else-if="column.formatType == 'gender'">
+            <!-- <p v-else-if="column.formatType == 'gender'">
               {{ formatGender(item[column.fieldName]) }}
-            </p>
+            </p> -->
             <p v-else>{{ item[column.fieldName] }}</p>
           </td>
           <td
@@ -159,20 +157,6 @@ export default {
       return FormatData.formatDate(_date);
     },
     /**
-     * formatMoney
-     * @param _salary
-     */
-    formatSalary(_salary) {
-      return FormatData.formatMoney(_salary);
-    },
-    /**
-     * Lấy giá trị text của genger
-     * @param _gender
-     */
-    formatGender(_gender) {
-      return FormatData.formatGender(_gender);
-    },
-    /**
      * Hiển thị functionList với position truyền vào
      * @param str
      * @param employeeId
@@ -198,14 +182,14 @@ export default {
       console.log(employeeId);
       this.$emit("chooseAnEmployee", employeeId);
     },
-    /**
-     * Sự kiện khi click btn sửa trên các dòng
-     * @param employeeId
-     * Author HieuNV
-     */
-    btnEditOnClick(employeeId) {
-      this.$emit("chooseAnEmployee", employeeId);
-    },
+    // /**
+    //  * Sự kiện khi click btn sửa trên các dòng
+    //  * @param employeeId
+    //  * Author HieuNV
+    //  */
+    // btnEditOnClick(employeeId) {
+    //   this.$emit("chooseAnEmployee", employeeId);
+    // },
     /**
      * Sự kiên khi click checkbox trên các hàng
      * @param id

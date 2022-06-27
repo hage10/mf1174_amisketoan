@@ -46,6 +46,7 @@
       "
       :mode="dialogMode"
       :employeeId="myEmployeeId"
+      :isReOpen="isReOpenDialog"
     />
   </div>
 </template>
@@ -80,6 +81,8 @@ export default {
       // các biến liên quan đến xử lí với dialog
       isShowDialog: false,
       dialogMode: "",
+      isReOpenDialog: false,
+
     };
   },
   methods: {
@@ -87,10 +90,18 @@ export default {
       this.isShowDialog = true;
       this.dialogMode = "add";
     },
-    chooseAnEmployee(id) {
+    /**
+     * Nhận sự kiện khi table chọn 1 nhân viên và truyền lên kèm theo id nhân viên => mở dilalog sửa
+     * @param employeeId
+     * Author HieuNV
+     */
+    chooseAnEmployee(employeeId) {
       this.isShowDialog = true;
       this.dialogMode = "edit";
-      this.myEmployeeId = id;
+      setTimeout(() => {
+        this.isReOpenDialog = !this.isReOpenDialog;
+      }, 100);
+      this.myEmployeeId = employeeId;
     },
     load() {
       /**
@@ -114,8 +125,13 @@ export default {
   },
 
   created() {
-    this.load();
+    this.emitter.on("btnEditOnClick", (id) => {
+      this.isShowDialog = true;
+      this.dialogMode = "edit";
+      this.myEmployeeId = id;
+    });
 
+    this.load();
     this.emitter.on("load", () => {
       this.load();
     });

@@ -61,11 +61,34 @@
                   type="date"
                   class="m-input input-w-2"
                   v-model="employeeModel.DateOfBirth"
+                  :inputValue="formatDateToValue(employeeModel.DateOfBirth)"
                 />
               </div>
               <div class="prop-item">
-                <p>Giới tính</p>
-                <RadioButtonGroup v-model="employeeModel.Gender" />
+                <div class="input-title">
+                  <div>Giới tính</div>
+                </div>
+                <div class="gender">
+                  <div
+                    class="check-sex"
+                    v-for="option in genderOptions"
+                    :key="option.id"
+                  >
+                    <label class="m-component-radio">
+                      <input
+                        class="male radio-input"
+                        name="gender"
+                        type="radio"
+                        :value="option.id"
+                        v-model="employeeModel.Gender"
+                      />
+                      <span class="m-radiocheck">
+                        <span class="image-radio"></span>
+                      </span>
+                      <span class="role">{{ option.name }}</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -107,6 +130,7 @@
                   type="date"
                   class="m-input input-w-2"
                   v-model="employeeModel.IdentityDate"
+                  :inputValue="formatDateToValue(employeeModel.IdentityPlace)"
                 />
               </div>
             </div>
@@ -118,7 +142,7 @@
                 <input
                   type="text"
                   class="m-input input-w-6"
-                  v-model="employeeModel.PositionName"
+                  v-model="employeeModel.EmployeePosition"
                 />
               </div>
             </div>
@@ -227,12 +251,12 @@
 import Checkbox from "../../components/base/Checkbox.vue";
 import Button from "../../components/base/Button.vue";
 import Combobox from "../../components/base/Combobox.vue";
-import RadioButtonGroup from "../../components/base/RadioButtonGroup.vue";
 import EmployeeApi from "@/api/entities/EmployeeApi.js";
 import DepartmentApi from "@/api/entities/DepartmentApi.js";
 import { required, helpers } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { EmployeeModel } from "@/models/EmployeeModels";
+import FormatData from "../../utils/Format.js";
 
 export default {
   name: "EmployeeDialog",
@@ -240,7 +264,7 @@ export default {
     Checkbox,
     Button,
     Combobox,
-    RadioButtonGroup,
+    // RadioButtonGroup,
   },
   setup() {
     return { v$: useVuelidate() };
@@ -253,6 +277,14 @@ export default {
     mode: {
       type: String,
       default: "add",
+    },
+    // myEmployeeId: {
+    //   type: String,
+    //   default: "",
+    // },
+    isReOpen: {
+      type: Boolean,
+      default: false,
     },
     employeeId: {
       type: String,
@@ -274,7 +306,7 @@ export default {
       employeeModel: {},
       // biến truyền vào thông báo combobox thay đổi lựa chọn
       reSelectCbb: false,
-            // các option của giới tính
+      // các option của giới tính
       genderOptions: [
         {
           id: 1,
@@ -288,7 +320,7 @@ export default {
           id: 2,
           name: "Khác",
         },
-        ],
+      ],
     };
   },
   /**
@@ -317,8 +349,78 @@ export default {
     };
   },
   methods: {
+    /**
+     * formatDate
+     * @param _date
+     * Author HieuNV
+     */
+    formatDateToValue(_date) {
+      return FormatData.formatDateToValue(_date);
+    },
     btnXOnClick() {
       this.$emit("closeForm");
+    },
+    hideDialog() {
+      this.$emit("closeForm");
+    },
+    async update(mode) {
+      //bắt đầu thực hiện check validate trước khi hiện cất và thêm
+      this.touched = {
+        employeeCode: true,
+        employeeName: true,
+        departmentId: true,
+      };
+      const result = await this.v$.$validate();
+      if (!result) {
+        //sự kiện gửi thông tin thông tin lỗi cho popup
+        this.emitter.emit(
+          "showPopup",
+          this.v$.$silentErrors[0].$message + "###warning###t###xoa"
+        );
+      } else {
+        //thực hiện post dữ liệu khi các trường đã được nhập đủ
+        console.log(this.employee);
+        EmployeeApi.update(this.employeeId, this.employeeModel)
+        
+          .then(async (res) => {
+            console.log(res);
+            this.emitter.emit("showMes", "cập nhật thành công!###success");
+            this.emitter.emit("load");
+            if (mode == "save") {
+              this.$emit("closeForm");
+            } else if (mode == "saveandadd") {
+              let newEmployeeCode;
+              await EmployeeApi.getNewCode()
+                .then((res) => {
+                  newEmployeeCode = res.data;
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              this.employeeModel = Object.assign({}, EmployeeModel);
+              this.employeeModel.EmployeeCode = newEmployeeCode;
+              this.employeeModel.Gender = 1;
+              this.touched = {
+                employeeCode: false,
+                employeeName: false,
+                departmentId: false,
+              };
+              this.$refs.txtEmployeeCodeRef.focus();
+            }
+          })
+          .catch((err) => {
+            if (
+              err.response.data.devMsg.includes(
+                "Mã khách hàng đã tồn tại trong hệ thống"
+              )
+            ) {
+              this.emitter.emit(
+                "showPopup",
+                `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u`
+              );
+            }
+          });
+      }
     },
     async save(mode) {
       //bắt đầu thực hiện check validate trước khi hiện cất và thêm
@@ -353,8 +455,9 @@ export default {
                 .catch((err) => {
                   console.log(err);
                 });
-              this.employeeModel = Object.assign({},EmployeeModel);
+              this.employeeModel = Object.assign({}, EmployeeModel);
               this.employeeModel.EmployeeCode = newEmployeeCode;
+              this.employeeModel.Gender = 1;
               this.touched = {
                 employeeCode: false,
                 employeeName: false,
@@ -378,7 +481,8 @@ export default {
       }
     },
     btnSaveOnClick() {
-      this.save("save");
+      this.update("save");
+
     },
 
     /**
@@ -414,12 +518,16 @@ export default {
           let newEmployeeCode = res.data;
           this.employeeModel.EmployeeCode = newEmployeeCode;
           this.$refs.txtEmployeeCodeRef.focus();
+          this.employeeModel.Gender = 1;
         })
         .catch((err) => {
           console.log(err);
         });
     } else if (this.mode == "edit") {
       console.log("lấy nhân viên có id ", this.employeeId);
+      EmployeeApi.getById(this.employeeId).then((res) => {
+        this.employeeModel = res.data;
+      });
     }
   },
 };
@@ -574,5 +682,62 @@ export default {
 .w-205 {
   width: 205px;
   padding-right: 6px;
+}
+
+.m-component-radio {
+  display: flex;
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 20px;
+}
+
+.radio-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio-input:checked {
+  display: none;
+}
+
+.radio-input:checked + .m-radiocheck {
+  border: 1px solid #2ca01c;
+}
+
+.radio-input:checked + .m-radiocheck > .image-radio {
+  display: block;
+}
+
+.image-radio {
+  display: none;
+  position: absolute;
+  background-color: #2ca01c;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.m-radiocheck {
+  display: flex;
+  border: 1px solid #afafaf;
+  width: 18px;
+  height: 18px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.role {
+  padding-left: 10px;
+}
+.gender {
+  display: flex;
+
+  margin-top: 7px;
 }
 </style>

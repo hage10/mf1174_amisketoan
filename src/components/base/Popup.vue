@@ -126,7 +126,6 @@ export default {
   width: 100%;
   height: calc(100% - 67px);
   overflow-y: hidden;
-  margin-bottom: 10px;
 }
 
 .popup-icon {

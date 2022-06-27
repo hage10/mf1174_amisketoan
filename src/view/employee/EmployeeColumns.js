@@ -13,7 +13,7 @@ export const employeeColumns = [{
         style: "text-align: left",
     },
     {
-        fieldName: "Gender",
+        fieldName: "GenderName",
         displayName: "GIỚI TÍNH",
         formatType: "gender",
         width: "min-width: 110px;",
@@ -36,9 +36,9 @@ export const employeeColumns = [{
     {
         fieldName: "IdentityDate",
         displayName: "NGÀY CẤP",
-        formatType: "",
+        formatType: "ddmmyyyy",
         width: "min-width: 150px;",
-        style: "text-align: left",
+        style: "text-align: center",
     },
     {
         fieldName: "IdentityPlace",
