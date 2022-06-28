@@ -52,10 +52,18 @@ export default {
       this.listButton = a.split("###")[2];
       this.modeForPopup = a.split("###")[3];
     });
-    //lắng nghe sự kiện closePopup để đóng popup
-    this.emitter.on("closePopup", (isShowPopup) => {
-      this.isShowPopup = isShowPopup;
+    // Lắng nghe sự kiện show Popup và hiện thị lỗi
+    this.emitter.on("showPopupEdit", (a) => {
+      this.isShowPopup = true;
+      this.popupText = a.split("###")[0];
+      this.popupType = a.split("###")[1];
+      this.listButton = a.split("###")[2];
+      this.modeForPopup = a.split("###")[3];
     });
+    // //lắng nghe sự kiện closePopup để đóng popup
+    // this.emitter.on("closePopup", (isShowPopup) => {
+    //   this.isShowPopup = isShowPopup;
+    // });
     //Lắng nghe sự kiện hiện toastMessenger
     this.emitter.on("showMes", (b) => {
       this.mesText = b.split("###")[0];
@@ -67,7 +75,7 @@ export default {
     /**
      * Xử lí sự kiện click vào 1 btn nào đó trên popup, dựa vào modeForPopup với btnClicked để xử lí sự kiện tương ứng
      * @param btnClicked
-     * Author HieuNV
+     * Author TrungTQ
      */
     popupOnConfirm(btnClicked) {
       switch (btnClicked) {
@@ -75,9 +83,10 @@ export default {
           if (this.modeForPopup == "delete") {
             this.emitter.emit("confirmToDelete");
             this.isShowPopup = false;
-          } else if (this.modeForPopup == "save") {
+          } else if (this.modeForPopup == "update") {
             this.emitter.emit("confirmToSave");
             this.isShowPopup = false;
+            this.emitter.emit("hideDialog");
           } else if (this.modeForPopup == "saveAndAdd") {
             this.emitter.emit("confirmToSaveAndAdd");
             this.isShowPopup = false;
@@ -85,7 +94,7 @@ export default {
           break;
         case "y":
           if (
-            this.modeForPopup == "save" ||
+            this.modeForPopup == "update" ||
             this.modeForPopup == "saveAndAdd"
           ) {
             this.isShowPopup = false;
@@ -94,7 +103,7 @@ export default {
           break;
         case "z":
           if (
-            this.modeForPopup == "save" ||
+            this.modeForPopup == "update" ||
             this.modeForPopup == "saveAndAdd"
           ) {
             this.isShowPopup = false;
@@ -111,8 +120,8 @@ export default {
           }
           break;
         case "u":
-          if (this.modeForPopup == "validate") {
-            alert("Đồng ý");
+          if (this.modeForPopup == "messenger") {
+            this.isShowPopup = false;
           }
           break;
         default:
@@ -130,6 +139,9 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "GoogleSans-Regular";
+}
 @import url("./css/icon.css");
 
 @font-face {
@@ -154,23 +166,6 @@ export default {
 
 [notvalid] {
   border: 1px solid #ff4747;
-}
-
-.apexcharts-canvas ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 6px;
-}
-
-.apexcharts-canvas ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 6px;
-}
-
-.apexcharts-canvas ::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
-  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .border-red {

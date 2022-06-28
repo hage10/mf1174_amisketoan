@@ -21,7 +21,7 @@ export default {
         methods: {
         /**
          * Sự kiện khi click vào checkbox
-         * Author HieuNV
+         * Author TrungTQ
          * */
         clickCheckBox(){
             this.$emit('checkboxOnClick');

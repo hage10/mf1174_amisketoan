@@ -30,7 +30,7 @@ export default {
   methods: {
     // /**
     //  * Sự kiện khi click nhân bản
-    //  * Author HieuNV
+    //  * Author TrungTQ
     //  * */
     // btnCloneOnClick() {
     //     this.isHide = true;
@@ -38,7 +38,7 @@ export default {
     // },
     // /**
     //  * Sự kiện khi click Xóa
-    //  * Author HieuNV
+    //  * Author TrungTQ
     //  * */
     btnDeleteOnClick() {
       this.isHide = true;

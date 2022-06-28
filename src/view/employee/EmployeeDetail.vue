@@ -236,7 +236,7 @@
             @btnClick="btnSaveOnClick"
           />
           <Button
-            buttonText="Cất và thêm"
+            buttonText="Cất và Thêm"
             buttonClass="button-primary"
             @btnClick="btnSaveAndAddOnClick"
           />
@@ -302,7 +302,7 @@ export default {
         employeeName: false,
         departmentId: false,
       },
-      // object: employee model để truyền và nhana dữ liệu từ các input
+      // object: employee model để truyền và nhận dữ liệu từ các input
       employeeModel: {},
       // biến truyền vào thông báo combobox thay đổi lựa chọn
       reSelectCbb: false,
@@ -352,13 +352,20 @@ export default {
     /**
      * formatDate
      * @param _date
-     * Author HieuNV
+     * Author TrungTQ
      */
     formatDateToValue(_date) {
       return FormatData.formatDateToValue(_date);
     },
     btnXOnClick() {
-      this.$emit("closeForm");
+      if (this.mode == "add") {
+        this.$emit("closeForm");
+      } else {
+        this.emitter.emit(
+          "showPopupEdit",
+          "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?###question###zxy###update"
+        );
+      }
     },
     hideDialog() {
       this.$emit("closeForm");
@@ -375,20 +382,17 @@ export default {
         //sự kiện gửi thông tin thông tin lỗi cho popup
         this.emitter.emit(
           "showPopup",
-          this.v$.$silentErrors[0].$message + "###warning###t###xoa"
+          this.v$.$silentErrors[0].$message + "###warning###t###messenger"
         );
       } else {
         //thực hiện post dữ liệu khi các trường đã được nhập đủ
         console.log(this.employee);
         EmployeeApi.update(this.employeeId, this.employeeModel)
-        
+
           .then(async (res) => {
             console.log(res);
-            this.emitter.emit("showMes", "cập nhật thành công!###success");
-            this.emitter.emit("load");
-            if (mode == "save") {
-              this.$emit("closeForm");
-            } else if (mode == "saveandadd") {
+
+            if (mode == "saveandadd") {
               let newEmployeeCode;
               await EmployeeApi.getNewCode()
                 .then((res) => {
@@ -406,19 +410,13 @@ export default {
                 departmentId: false,
               };
               this.$refs.txtEmployeeCodeRef.focus();
+            } else {
+              this.emitter.emit("showMes", "Cập nhật thành công!###success");
+              this.emitter.emit("load");
             }
           })
           .catch((err) => {
-            if (
-              err.response.data.devMsg.includes(
-                "Mã khách hàng đã tồn tại trong hệ thống"
-              )
-            ) {
-              this.emitter.emit(
-                "showPopup",
-                `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u`
-              );
-            }
+            console.log(err);
           });
       }
     },
@@ -434,7 +432,7 @@ export default {
         //sự kiện gửi thông tin thông tin lỗi cho popup
         this.emitter.emit(
           "showPopup",
-          this.v$.$silentErrors[0].$message + "###warning###t###xoa"
+          this.v$.$silentErrors[0].$message + "###warning###t###messenger"
         );
       } else {
         //thực hiện post dữ liệu khi các trường đã được nhập đủ
@@ -474,15 +472,21 @@ export default {
             ) {
               this.emitter.emit(
                 "showPopup",
-                `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u`
+                `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u###messenger`
               );
             }
           });
       }
     },
     btnSaveOnClick() {
-      this.update("save");
-
+      if (this.mode == "add") {
+        this.save("save");
+      } else {
+        this.emitter.emit(
+          "showPopupEdit",
+          "Bạn có muốn cập nhật bản ghi không?###question###zxy###update"
+        );
+      }
     },
 
     /**
@@ -490,7 +494,14 @@ export default {
      * author: TrungTQ (20/06/2022)
      */
     async btnSaveAndAddOnClick() {
-      this.save("saveandadd");
+      if (this.mode == "add") {
+        this.save("saveandadd");
+      } else {
+        this.emitter.emit(
+          "showPopupEdit",
+          "Bạn có muốn cập nhật bản ghi không?###question###zxy###update"
+        );
+      }
     },
     // các hàm sử sụng cho combobox
     comboboxOnSelect(cbbValue) {
@@ -505,6 +516,17 @@ export default {
   },
 
   async created() {
+    // Lắng nghe sự kiên confirm cất
+    this.emitter.on("confirmToSave", async () => {
+      if (this.mode == "edit") {
+        let success = await this.update();
+        if (success) {
+          this.$emit("closeForm");
+        } else {
+          console.log("nônno");
+        }
+      }
+    });
     // lấy danh sách phòng ban và gán cho data listDepartment
     await DepartmentApi.getAll().then((res) => {
       console.log(res.data);

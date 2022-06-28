@@ -29,14 +29,17 @@
         </div>
       </div>
     </div>
-    <div class="table-paging">
-      <TheTable
-        :tableColumns="tableColumns"
-        :tableDataList="tableDataList"
-        @chooseAnEmployee="chooseAnEmployee"
-      ></TheTable>
-      <PagingBar :totalRecord="totalRecord" />
+    <div class="trungtrung">
+      <div class="table-paging">
+        <TheTable
+          :tableColumns="tableColumns"
+          :tableDataList="tableDataList"
+          @chooseAnEmployee="chooseAnEmployee"
+        ></TheTable>
+        <PagingBar :totalRecord="totalRecord" />
+      </div>
     </div>
+
     <EmployeeDetail
       v-if="isShowDialog"
       @closeForm="
@@ -82,7 +85,6 @@ export default {
       isShowDialog: false,
       dialogMode: "",
       isReOpenDialog: false,
-
     };
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
     /**
      * Nhận sự kiện khi table chọn 1 nhân viên và truyền lên kèm theo id nhân viên => mở dilalog sửa
      * @param employeeId
-     * Author HieuNV
+     * Author TrungTQ
      */
     chooseAnEmployee(employeeId) {
       this.isShowDialog = true;
@@ -135,6 +137,9 @@ export default {
     this.emitter.on("load", () => {
       this.load();
     });
+    this.emitter.on("hideDialog", () => {
+      this.isShowDialog = false;
+    });
   },
 };
 </script>
@@ -150,6 +155,19 @@ export default {
   padding-left: 20px;
   padding-right: 30px;
   box-sizing: border-box;
+  overflow: scroll;
+}
+.employee-content::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.employee-content::-webkit-scrollbar-thumb {
+  background: #b8bcc3;
+}
+
+.employee-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
 .employee-content .employee-header {
@@ -159,6 +177,8 @@ export default {
   padding: 24px 0px 24px 0px;
   box-sizing: border-box;
   float: left;
+  position: sticky;
+  left: 0;
 }
 
 .employee-content .employee-header .header-row {
@@ -186,6 +206,8 @@ export default {
   box-sizing: border-box;
   background-color: #fff;
   float: left;
+  position: sticky;
+  left: 0;
 }
 
 .employee-toolbar .toolbar-row {
@@ -298,10 +320,12 @@ export default {
   background-position: -705px -257px;
 }
 
+.trungtrung {
+  background: #111111;
+  width: auto;
+  z-index: 100000;
+}
 .table-paging {
-  width: 100%;
-  /*height: auto;*/
-  height: calc(100% - 152px);
   background-color: #f4f5f8;
   /*padding-right: 20px;*/
   /*padding-left: 20px;*/

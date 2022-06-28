@@ -28,7 +28,7 @@ export default {
   methods: {
     /**
      * Sưk kiện khi click vào btn more Option
-     * Author HieuNV
+     * Author TrungTQ
      * */
     btnMoreOptionOnClick() {
       this.isSelect = true;
@@ -50,7 +50,7 @@ export default {
     },
     /**
      * Sự kiên khi click vào btn sửa
-     * Author HieuNV
+     * Author TrungTQ
      * */
     btnEditOnClick() {
       this.emitter.emit("btnEditOnClick", this.toolId);

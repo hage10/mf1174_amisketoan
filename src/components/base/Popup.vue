@@ -56,13 +56,13 @@
           v-if="popupListButton == 't'"
           buttonText="Đóng"
           buttonClass="button-primary"
-          @btnClick="btnClosePopupOnClick"
+          @btnClick="$emit('popupOnConfirm', 't')"
         />
         <Button
           v-if="popupListButton == 'u'"
           buttonText="Đồng ý"
           buttonClass="button-primary"
-          @btnClick="btnClosePopupOnClick"
+          @btnClick="$emit('popupOnConfirm', 'u')"
         />
       </div>
     </div>
@@ -126,6 +126,7 @@ export default {
   width: 100%;
   height: calc(100% - 67px);
   overflow-y: hidden;
+  margin-bottom: 10px;
 }
 
 .popup-icon {

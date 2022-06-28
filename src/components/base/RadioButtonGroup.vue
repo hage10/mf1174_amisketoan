@@ -31,7 +31,7 @@
         methods: {
             /**
              * Sự kiện khi click vào rb0
-             * Author HieuNV
+             * Author TrungTQ
              * */
             rb0OnClick() {
                 if (this.rb0Value == false) {
@@ -45,7 +45,7 @@
             },
             /**
              * Sự kiện khi click vào rb1
-             * Author HieuNV
+             * Author TrungTQ
              * */
             rb1OnClick() {
                 if (this.rb1Value == false) {
@@ -59,7 +59,7 @@
             },
             /**
              * Sự kiện khi click vào rb2
-             * Author HieuNV
+             * Author TrungTQ
              * */
             rb2OnClick() {
                 if (this.rb2Value == false) {
@@ -73,7 +73,7 @@
             },
             /**
              * Lấy giá trị của rb group hiện tại thông qua giá trị các rb
-             * Author HieuNV
+             * Author TrungTQ
              * */
             getValue() {
                 if (this.rb0Value == true) {

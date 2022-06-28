@@ -14,7 +14,7 @@
         <th
           style="
             position: sticky;
-            left: 0;
+            left: 20px;
             z-index: 10000;
             background-color: #eceef1;
           "
@@ -43,7 +43,7 @@
         <th
           style="
             position: sticky;
-            right: 0;
+            right: 20px;
             z-index: 10000;
             background-color: #eceef1;
           "
@@ -68,7 +68,7 @@
           <td
             style="
               position: sticky;
-              left: 0;
+              left: 20px;
               z-index: 900;
               background-color: #fff;
             "
@@ -103,7 +103,7 @@
           <td
             style="
               position: sticky;
-              right: 0;
+              right: 20px;
               z-index: 900;
               background-color: #fff;
             "
@@ -160,7 +160,7 @@ export default {
      * Hiển thị functionList với position truyền vào
      * @param str
      * @param employeeId
-     * Author HieuNV
+     * Author TrungTQ
      */
     showFunctionList(str, employeeId) {
       this.isShowFunctionList = true;
@@ -169,7 +169,7 @@ export default {
     },
     /**
      * Ẩn functionList
-     * Author HieuNv
+     * Author TrungTQ
      * */
     hideFunctionList() {
       this.isShowFunctionList = false;
@@ -185,7 +185,7 @@ export default {
     // /**
     //  * Sự kiện khi click btn sửa trên các dòng
     //  * @param employeeId
-    //  * Author HieuNV
+    //  * Author TrungTQ
     //  */
     // btnEditOnClick(employeeId) {
     //   this.$emit("chooseAnEmployee", employeeId);
@@ -216,7 +216,7 @@ export default {
   width: 100%;
   height: auto;
   max-height: calc(100% - 46px);
-  overflow: scroll;
+
   background-color: #fff;
   box-sizing: border-box;
   float: left;
@@ -226,7 +226,7 @@ export default {
 
 table {
   border-collapse: collapse;
-  width: auto;
+  width: inherit;
   height: auto;
   display: table;
 }
