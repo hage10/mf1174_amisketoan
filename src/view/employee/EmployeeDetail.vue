@@ -255,7 +255,7 @@ import EmployeeApi from "@/api/entities/EmployeeApi.js";
 import DepartmentApi from "@/api/entities/DepartmentApi.js";
 import { required, helpers } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import { EmployeeModel } from "@/models/EmployeeModels";
+// import { EmployeeModel } from "@/models/EmployeeModels";
 import FormatData from "../../utils/Format.js";
 
 export default {
@@ -357,20 +357,11 @@ export default {
     formatDateToValue(_date) {
       return FormatData.formatDateToValue(_date);
     },
-    btnXOnClick() {
-      if (this.mode == "add") {
-        this.$emit("closeForm");
-      } else {
-        this.emitter.emit(
-          "showPopupEdit",
-          "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?###question###zxy###update"
-        );
-      }
-    },
+
     hideDialog() {
       this.$emit("closeForm");
     },
-    async update(mode) {
+    async save(modeStatus) {
       //bắt đầu thực hiện check validate trước khi hiện cất và thêm
       this.touched = {
         employeeCode: true,
@@ -385,108 +376,127 @@ export default {
           this.v$.$silentErrors[0].$message + "###warning###t###messenger"
         );
       } else {
-        //thực hiện post dữ liệu khi các trường đã được nhập đủ
-        console.log(this.employee);
-        EmployeeApi.update(this.employeeId, this.employeeModel)
-
-          .then(async (res) => {
-            console.log(res);
-
-            if (mode == "saveandadd") {
-              let newEmployeeCode;
-              await EmployeeApi.getNewCode()
-                .then((res) => {
-                  newEmployeeCode = res.data;
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-              this.employeeModel = Object.assign({}, EmployeeModel);
-              this.employeeModel.EmployeeCode = newEmployeeCode;
-              this.employeeModel.Gender = 1;
-              this.touched = {
-                employeeCode: false,
-                employeeName: false,
-                departmentId: false,
-              };
-              this.$refs.txtEmployeeCodeRef.focus();
-            } else {
+        if (this.mode == "add") {
+          EmployeeApi.add(this.employeeModel)
+            .then((res) => {
+              console.log(res);
+              this.emitter.emit("showMes", "Thêm mới thành công!###success");
+              this.emitter.emit("load");
+              if (modeStatus == "save") {
+                this.$emit("closeForm");
+              } else if (modeStatus == "saveandadd") {
+                this.$emit("reOpenForm");
+              }
+            })
+            .catch((err) => {
+              if (
+                err.response.data.devMsg.includes(
+                  "Mã khách hàng đã tồn tại trong hệ thống"
+                )
+              ) {
+                this.emitter.emit(
+                  "showPopup",
+                  `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u###messenger`
+                );
+              } else if (
+                err.response.data.devMsg.includes(
+                  "Thông tin mã nhân viên không hợp lệ"
+                )
+              ) {
+                this.emitter.emit(
+                  "showPopup",
+                  `Mã nhân viên không hợp lệ.###warning###u###messenger`
+                );
+              } else if (
+                err.response.data.devMsg.includes(
+                  "Ngày sinh không được lớn hơn ngày hiện tại"
+                )
+              ) {
+                this.emitter.emit(
+                  "showPopup",
+                  `Ngày sinh không được lớn hơn ngày hiện tại.###warning###u###messenger`
+                );
+              }
+            });
+        } else {
+          EmployeeApi.update(this.employeeId,this.employeeModel)
+            .then(async (res) => {
+              console.log(res);
               this.emitter.emit("showMes", "Cập nhật thành công!###success");
               this.emitter.emit("load");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+              if (modeStatus == "save") {
+                this.$emit("closeForm");
+              } else if (modeStatus == "saveandadd") {
+                this.$emit("reOpenForm");
+                // let newEmployeeCode;
+                // await EmployeeApi.getNewCode()
+                //   .then((res) => {
+                //     newEmployeeCode = res.data;
+                //   })
+                //   .catch((err) => {
+                //     console.log(err);
+                //   });
+                // this.employeeModel = Object.assign({}, EmployeeModel);
+                // this.employeeModel.EmployeeCode = newEmployeeCode;
+                // this.employeeModel.Gender = 1;
+                // this.touched = {
+                //   employeeCode: false,
+                //   employeeName: false,
+                //   departmentId: false,
+                // };
+                // this.$refs.txtEmployeeCodeRef.focus();
+              }
+            })
+            .catch((err) => {
+              if (
+                err.response.data.devMsg.includes(
+                  "Mã khách hàng đã tồn tại trong hệ thống"
+                )
+              ) {
+                this.emitter.emit(
+                  "showPopup",
+                  `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u###messenger`
+                );
+              } else if (
+                err.response.data.devMsg.includes(
+                  "Thông tin mã nhân viên không hợp lệ"
+                )
+              ) {
+                this.emitter.emit(
+                  "showPopup",
+                  `Mã nhân viên không hợp lệ.###warning###u###messenger`
+                );
+              } else if (
+                err.response.data.devMsg.includes(
+                  "Ngày sinh không được lớn hơn ngày hiện tại"
+                )
+              ) {
+                this.emitter.emit(
+                  "showPopup",
+                  `Ngày sinh không được lớn hơn ngày hiện tại.###warning###u###messenger`
+                );
+              }
+            });
+        }
       }
     },
-    async save(mode) {
-      //bắt đầu thực hiện check validate trước khi hiện cất và thêm
-      this.touched = {
-        employeeCode: true,
-        employeeName: true,
-        departmentId: true,
-      };
-      const result = await this.v$.$validate();
-      if (!result) {
-        //sự kiện gửi thông tin thông tin lỗi cho popup
-        this.emitter.emit(
-          "showPopup",
-          this.v$.$silentErrors[0].$message + "###warning###t###messenger"
-        );
-      } else {
-        //thực hiện post dữ liệu khi các trường đã được nhập đủ
-        console.log(this.employee);
-        EmployeeApi.add(this.employeeModel)
-          .then(async (res) => {
-            console.log(res);
-            this.emitter.emit("showMes", "Thêm mới thành công!###success");
-            this.emitter.emit("load");
-            if (mode == "save") {
-              this.$emit("closeForm");
-            } else if (mode == "saveandadd") {
-              let newEmployeeCode;
-              await EmployeeApi.getNewCode()
-                .then((res) => {
-                  newEmployeeCode = res.data;
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-              this.employeeModel = Object.assign({}, EmployeeModel);
-              this.employeeModel.EmployeeCode = newEmployeeCode;
-              this.employeeModel.Gender = 1;
-              this.touched = {
-                employeeCode: false,
-                employeeName: false,
-                departmentId: false,
-              };
-              this.$refs.txtEmployeeCodeRef.focus();
-            }
-          })
-          .catch((err) => {
-            if (
-              err.response.data.devMsg.includes(
-                "Mã khách hàng đã tồn tại trong hệ thống"
-              )
-            ) {
-              this.emitter.emit(
-                "showPopup",
-                `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u###messenger`
-              );
-            }
-          });
-      }
+
+        /**
+     * Ấn icon X trong form thêm mới nhân viên
+     * author: TrungTQ (20/06/2022)
+     */
+    btnXOnClick() {
+      this.emitter.emit(
+        "showPopup",
+        "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?###question###zxy###saveChange"
+      );
     },
+    /**
+     * Ấn button cất trong form thêm mới nhân viên
+     * author: TrungTQ (20/06/2022)
+     */
     btnSaveOnClick() {
-      if (this.mode == "add") {
-        this.save("save");
-      } else {
-        this.emitter.emit(
-          "showPopupEdit",
-          "Bạn có muốn cập nhật bản ghi không?###question###zxy###update"
-        );
-      }
+      this.save("save");
     },
 
     /**
@@ -494,14 +504,7 @@ export default {
      * author: TrungTQ (20/06/2022)
      */
     async btnSaveAndAddOnClick() {
-      if (this.mode == "add") {
-        this.save("saveandadd");
-      } else {
-        this.emitter.emit(
-          "showPopupEdit",
-          "Bạn có muốn cập nhật bản ghi không?###question###zxy###update"
-        );
-      }
+      this.save("saveandadd");
     },
     // các hàm sử sụng cho combobox
     comboboxOnSelect(cbbValue) {
@@ -517,15 +520,8 @@ export default {
 
   async created() {
     // Lắng nghe sự kiên confirm cất
-    this.emitter.on("confirmToSave", async () => {
-      if (this.mode == "edit") {
-        let success = await this.update();
-        if (success) {
-          this.$emit("closeForm");
-        } else {
-          console.log("nônno");
-        }
-      }
+    this.emitter.on("confirmToSaveChange", async () => {
+      this.save("save");
     });
     // lấy danh sách phòng ban và gán cho data listDepartment
     await DepartmentApi.getAll().then((res) => {

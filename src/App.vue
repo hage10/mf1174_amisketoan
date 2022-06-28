@@ -52,14 +52,6 @@ export default {
       this.listButton = a.split("###")[2];
       this.modeForPopup = a.split("###")[3];
     });
-    // Lắng nghe sự kiện show Popup và hiện thị lỗi
-    this.emitter.on("showPopupEdit", (a) => {
-      this.isShowPopup = true;
-      this.popupText = a.split("###")[0];
-      this.popupType = a.split("###")[1];
-      this.listButton = a.split("###")[2];
-      this.modeForPopup = a.split("###")[3];
-    });
     // //lắng nghe sự kiện closePopup để đóng popup
     // this.emitter.on("closePopup", (isShowPopup) => {
     //   this.isShowPopup = isShowPopup;
@@ -83,19 +75,15 @@ export default {
           if (this.modeForPopup == "delete") {
             this.emitter.emit("confirmToDelete");
             this.isShowPopup = false;
-          } else if (this.modeForPopup == "update") {
-            this.emitter.emit("confirmToSave");
-            this.isShowPopup = false;
-            this.emitter.emit("hideDialog");
-          } else if (this.modeForPopup == "saveAndAdd") {
-            this.emitter.emit("confirmToSaveAndAdd");
+          } else if (this.modeForPopup == "saveChange") {
+            this.emitter.emit("confirmToSaveChange");
             this.isShowPopup = false;
           }
+
           break;
         case "y":
           if (
-            this.modeForPopup == "update" ||
-            this.modeForPopup == "saveAndAdd"
+            this.modeForPopup == "saveChange"
           ) {
             this.isShowPopup = false;
             this.emitter.emit("hideDialog");
@@ -103,8 +91,7 @@ export default {
           break;
         case "z":
           if (
-            this.modeForPopup == "update" ||
-            this.modeForPopup == "saveAndAdd"
+            this.modeForPopup == "saveChange"
           ) {
             this.isShowPopup = false;
           }

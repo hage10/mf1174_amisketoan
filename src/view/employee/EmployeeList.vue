@@ -47,6 +47,7 @@
           isShowDialog = false;
         }
       "
+      @reOpenForm="reOpenForm"
       :mode="dialogMode"
       :employeeId="myEmployeeId"
       :isReOpen="isReOpenDialog"
@@ -88,6 +89,12 @@ export default {
     };
   },
   methods: {
+    reOpenForm() {
+      this.isShowDialog = false;
+      setTimeout(() => {
+        this.isShowDialog = true;
+      }, 10);
+    },
     btnAddOnClick() {
       this.isShowDialog = true;
       this.dialogMode = "add";
