@@ -1,238 +1,180 @@
 ﻿<template>
-  <div class="paging-bar">
-    <div class="paging-left">
-      Tổng số: <span>{{ totalRecord }}</span> bản ghi
-    </div>
-    <div class="paging-right">
-      <div class="dropdown-paging">
-        <div class="dropdown-main">
-          <p>{{ pagingSize }} nhân viên trên trang</p>
+    <div class="paging-bar">
+        <div class="paging-left">Tổng số: <span>{{totalRecord}}</span> bản ghi</div>
+        <div class="paging-right">
+            <div class="dropdown-paging">
+                <div class="dropdown-main">
+                    <p>{{pagingSize}} nhân viên trên trang</p>
+                </div>
+                <button class="dropdown-choose" @click="showDropdownList" @blur="dropdownPagingOnBlur">
+                    <div :class="['dropdown-icon','background-icon','position-icon-down-black', {'rotate-icon':isShowDropdownList}]"></div>
+                </button>
+                <div v-if="isShowDropdownList" class="dropdown-list" :class="{'dropdown-list-down': pagingSize == 10}">
+                    <div v-for="item in pagingSizeList" 
+                         :key="item" 
+                         :class="['dropdown-item',{'dropdown-item-active': pagingSize == item }]"
+                         @click="changePagingSize(item)"
+                    >
+                    {{item}} bản ghi trên trang
+                    </div>
+                </div>
+            </div>
+            <span>
+                <button class="previous-btn" :disabled="currentPage==1" @click="changeCurrentPage(currentPage-1)">Trước</button>
+                <button v-if="!buttonChooseList.includes(1)" @click="changeCurrentPage(1)" :class="{'button-current-page': 1 == currentPage}">1</button>
+                <button v-if="buttonChooseList[0]>2" @click="preButtonChooseList">...</button>
+                <button v-for="itemBtn in buttonChooseList" :key="itemBtn" @click="changeCurrentPage(itemBtn)" :class="{'button-current-page': itemBtn == currentPage}">
+                {{itemBtn}}
+                </button>
+                <button v-if="buttonChooseList[buttonChooseList.length-1]<totalPage-1" @click="nextButtonChooseList">...</button>
+                <button v-if="!buttonChooseList.includes(totalPage)" @click="changeCurrentPage(totalPage)" :class="{'button-current-page': totalPage == currentPage}">{{totalPage}}</button>
+                <button class="next-btn" :disabled="currentPage==totalPage" @click="changeCurrentPage(currentPage+1)">Sau</button>
+            </span>
         </div>
-        <button
-          class="dropdown-choose"
-          @click="showDropdownList"
-          @blur="dropdownPagingOnBlur"
-        >
-          <div
-            :class="[
-              'dropdown-icon',
-              'background-icon',
-              'position-icon-down-black',
-              { 'rotate-icon': isShowDropdownList },
-            ]"
-          ></div>
-        </button>
-        <div
-          v-if="isShowDropdownList"
-          class="dropdown-list"
-          :class="{ 'dropdown-list-down': pagingSize == 10 }"
-        >
-          <div
-            v-for="item in pagingSizeList"
-            :key="item"
-            :class="[
-              'dropdown-item',
-              { 'dropdown-item-active': pagingSize == item },
-            ]"
-            @click="changePagingSize(item)"
-          >
-            {{ item }} bản ghi trên trang
-          </div>
-        </div>
-      </div>
-      <span>
-        <button
-          class="previous-btn"
-          :disabled="currentPage == 1"
-          @click="changeCurrentPage(currentPage - 1)"
-        >
-          Trước
-        </button>
-        <button
-          v-if="!buttonChooseList.includes(1)"
-          @click="changeCurrentPage(1)"
-          :class="{ 'button-current-page': 1 == currentPage }"
-        >
-          1
-        </button>
-        <button v-if="buttonChooseList[0] > 2" @click="preButtonChooseList">
-          ...
-        </button>
-        <button
-          v-for="itemBtn in buttonChooseList"
-          :key="itemBtn"
-          @click="changeCurrentPage(itemBtn)"
-          :class="{ 'button-current-page': itemBtn == currentPage }"
-        >
-          {{ itemBtn }}
-        </button>
-        <button
-          v-if="buttonChooseList[buttonChooseList.length - 1] < totalPage - 1"
-          @click="nextButtonChooseList"
-        >
-          ...
-        </button>
-        <button
-          v-if="!buttonChooseList.includes(totalPage)"
-          @click="changeCurrentPage(totalPage)"
-          :class="{ 'button-current-page': totalPage == currentPage }"
-        >
-          {{ totalPage }}
-        </button>
-        <button
-          class="next-btn"
-          :disabled="currentPage == totalPage"
-          @click="changeCurrentPage(currentPage + 1)"
-        >
-          Sau
-        </button>
-      </span>
     </div>
-  </div>
 </template>
 
 
 <script>
 export default {
-  name: "PagingBar",
-  props: {
-    totalRecord: {
-      default: 0,
-      type: Number,
-    },
-    pagingSize: {
-      default: 20,
-      type: Number,
-    },
-    currentPage: {
-      default: 5,
-      type: Number,
-    },
-  },
-  data() {
-    return {
-      pagingSizeList: [10, 20, 30, 50, 100],
-      isShowDropdownList: false,
-      buttonChooseList: [],
-      totalPage: 0,
-    };
-  },
-  methods: {
-    /**
-     * Thực hiện tính toán lại các data của paging từ các prop
-     * Author TrungTQ
-     * */
-    reloadPagingBar() {
-      // tính tổng số trang
-      this.totalPage = Math.ceil(this.totalRecord / this.pagingSize);
-      // Tính array buttonChooseList
-      if (this.totalPage <= 3) {
-        this.buttonChooseList = [];
-        for (let i = 1; i <= this.totalPage; i++) {
-          this.buttonChooseList.push(i);
+    name:'PagingBar',
+    props:{
+        totalRecord: {
+            default: 0,
+            type: Number
+        },
+        pagingSize: {
+            default: 20,
+            type: Number
+        },
+        currentPage: {
+            default: 5,
+            type: Number
         }
-      } else {
-        this.buttonChooseList = [];
-        if (this.currentPage <= 3) {
-          this.buttonChooseList = [1, 2, 3];
-        } else if (this.totalPage - this.currentPage <= 2) {
-          let start = this.totalPage - 2;
-          for (let i = start; i <= this.totalPage; i++) {
-            this.buttonChooseList.push(i);
-          }
-        } else {
-          for (let i = this.currentPage - 1; i <= this.currentPage + 1; i++) {
-            this.buttonChooseList.push(i);
-          }
-        }
-      }
-    },
-    /**
-     * Sự kiện khi blur dropdown
-     * Author TrungTQ
-     * */
-    dropdownPagingOnBlur() {
-      setTimeout(() => {
-        this.isShowDropdownList = false;
-      }, 200);
-    },
-    /**
-     * Thực hiện thay đổi pagingSize bằng cách emit ra để truyền lại vào prop, đồng thời chuyển currentPage về 0
-     * @param newPagingSize
-     * Author TrungTQ
-     */
-    changePagingSize(newPagingSize) {
-      this.$emit("changePagingSize", newPagingSize);
-      this.$emit("changeCurrentPage", 1);
-      this.isShowDropdownList = false;
-    },
-    /**
-     * Thực hiện thay đổi giá trị currentPage
-     * @param newCurrentPage
-     * Author TrungTQ
-     */
-    changeCurrentPage(newCurrentPage) {
-      this.$emit("changeCurrentPage", newCurrentPage);
-    },
-    /**
-     * Sự kiện hiển thị list các pagingSize khi click vào btn option
-     * Author TrungTQ
-     * */
-    showDropdownList() {
-      this.isShowDropdownList = true;
-    },
-    /**
-     * Sự kiện trượt list button page lên 3 đơn vị
-     * Author TrungTQ
-     * */
-    nextButtonChooseList() {
-      if (this.buttonChooseList[2] + 3 > this.totalPage) {
-        this.buttonChooseList = [];
-        let start = this.totalPage - 2;
-        for (let i = start; i <= this.totalPage; i++) {
-          this.buttonChooseList.push(i);
-        }
-      } else {
-        let start = this.buttonChooseList[2] + 1;
-        this.buttonChooseList = [];
-        for (let i = start; i <= start + 2; i++) {
-          this.buttonChooseList.push(i);
-        }
-      }
-    },
-    /**
-     *Sự kiện trượt list button page xuống 3 đơn vị
-     * Author TrungTQ
-     * */
-    preButtonChooseList() {
-      if (this.buttonChooseList[0] <= 3) {
-        this.buttonChooseList = [];
-        this.buttonChooseList = [1, 2, 3];
-      } else {
-        let start = this.buttonChooseList[0] - 3;
-        this.buttonChooseList = [];
-        for (let i = start; i <= start + 2; i++) {
-          this.buttonChooseList.push(i);
-        }
-      }
-    },
-  },
-  watch: {
-    // mỗi khi 1 trong 3 prop thay đổi thì thực hiện tính toán lại các data để hoàn thiện Paging
+        },
+        data() {
+            return {
+                pagingSizeList: [10, 20, 30, 50, 100],
+                isShowDropdownList: false,
+                buttonChooseList: [],
+                totalPage: 0
+            }
+        },
+        methods: {
+            /**
+             * Thực hiện tính toán lại các data của paging từ các prop
+             * Author TrungTQ
+             * */
+            reloadPagingBar() {
+                // tính tổng số trang
+                this.totalPage = Math.ceil(this.totalRecord / this.pagingSize);
+                // Tính array buttonChooseList
+                if (this.totalPage <= 3) {
+                    this.buttonChooseList = []
+                    for (let i = 1; i <= this.totalPage; i++) {
+                        this.buttonChooseList.push(i);
+                    }
+                } else {
+                    this.buttonChooseList = [];
+                    if (this.currentPage <= 3) {
+                        this.buttonChooseList = [1, 2, 3];
+                    } else if (this.totalPage - this.currentPage <= 2) {
+                        let start = this.totalPage - 2;
+                        for (let i = start; i <= this.totalPage; i++) {
+                            this.buttonChooseList.push(i);
+                        }
+                    } else {
+                        for (let i = this.currentPage - 1; i <= this.currentPage + 1; i++) {
+                            this.buttonChooseList.push(i);
+                        }
+                    }
+                }
+            },
+            /**
+             * Sự kiện khi blur dropdown
+             * Author TrungTQ
+             * */
+            dropdownPagingOnBlur() {
+                setTimeout(() => {
+                    this.isShowDropdownList = false;
+                },200)
+            },
+            /**
+             * Thực hiện thay đổi pagingSize bằng cách emit ra để truyền lại vào prop, đồng thời chuyển currentPage về 0
+             * @param newPagingSize
+             * Author TrungTQ
+             */
+            changePagingSize(newPagingSize) {
+                this.$emit('changePagingSize', newPagingSize);
+                this.$emit('changeCurrentPage', 1);
+                this.isShowDropdownList = false;
+            },
+            /**
+             * Thực hiện thay đổi giá trị currentPage
+             * @param newCurrentPage
+             * Author TrungTQ
+             */
+            changeCurrentPage(newCurrentPage) {
+                this.$emit('changeCurrentPage', newCurrentPage);
+            },
+            /**
+             * Sự kiện hiển thị list các pagingSize khi click vào btn option
+             * Author TrungTQ
+             * */
+            showDropdownList() {
+                this.isShowDropdownList = true;
+            },
+            /**
+             * Sự kiện trượt list button page lên 3 đơn vị
+             * Author TrungTQ
+             * */
+            nextButtonChooseList() {             
+                if ((this.buttonChooseList[2] + 3) > this.totalPage) {
+                    this.buttonChooseList = [];
+                    let start = this.totalPage - 2;
+                    for (let i = start; i <= this.totalPage; i++) {
+                        this.buttonChooseList.push(i);
+                    }
+                } else {
+                    let start = this.buttonChooseList[2] + 1;
+                    this.buttonChooseList = [];
+                    for (let i = start; i <= start + 2; i++) {
+                        this.buttonChooseList.push(i);
+                    }
+                }
+            },
+            /**
+             *Sự kiện trượt list button page xuống 3 đơn vị
+             * Author TrungTQ
+             * */
+            preButtonChooseList() {              
+                if (this.buttonChooseList[0] <= 3) {
+                    this.buttonChooseList = [];
+                    this.buttonChooseList = [1, 2, 3];
+                } else {
+                    let start = this.buttonChooseList[0] - 3;
+                    this.buttonChooseList = [];
+                    for (let i = start; i <= start + 2; i++) {
+                        this.buttonChooseList.push(i);
+                    }
+                }
+            }
+        },
+        watch: {
+            // mỗi khi 1 trong 3 prop thay đổi thì thực hiện tính toán lại các data để hoàn thiện Paging
 
-    totalRecord() {
-      this.reloadPagingBar();
-    },
-    pagingSize() {
-      this.reloadPagingBar();
-    },
-    currentPage() {
-      this.reloadPagingBar();
-    },
-  },
-};
+            totalRecord() {
+                this.reloadPagingBar();
+            },
+            pagingSize() {
+                this.reloadPagingBar();
+            },
+            currentPage() {
+                this.reloadPagingBar();
+            },
+        },
+}
 </script>
-
 
 <style scoped>
 .paging-bar button {
@@ -353,8 +295,8 @@ span button:last-child {
 }
 
 .dropdown-list-down {
-  top: 34px !important;
-  bottom: auto;
+  bottom: 34px !important;
+
 }
 
 .dropdown-item {

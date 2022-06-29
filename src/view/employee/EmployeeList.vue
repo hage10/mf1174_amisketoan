@@ -36,7 +36,13 @@
           :tableDataList="tableDataList"
           @chooseAnEmployee="chooseAnEmployee"
         ></TheTable>
-        <PagingBar :totalRecord="totalRecord" />
+        <PagingBar
+          :totalRecord="totalRecord"
+          :pagingSize="pagingSize"
+          :currentPage="currentPage"
+          @changePagingSize="changePagingSize"
+          @changeCurrentPage="changeCurrentPage"
+        />
       </div>
     </div>
 
@@ -47,7 +53,6 @@
           isShowDialog = false;
         }
       "
-      @reOpenForm="reOpenForm"
       :mode="dialogMode"
       :employeeId="myEmployeeId"
       :isReOpen="isReOpenDialog"
@@ -81,7 +86,10 @@ export default {
       // các mảng cột và hàng truyền vào cho table
       tableColumns: employeeColumns,
       tableDataList: [],
-
+      // các biến lưu dữ liệu của paging
+      totalRecord: 0,
+      currentPage: 1,
+      pagingSize: 20,
       // các biến liên quan đến xử lí với dialog
       isShowDialog: false,
       dialogMode: "",
@@ -89,12 +97,6 @@ export default {
     };
   },
   methods: {
-    reOpenForm() {
-      this.isShowDialog = false;
-      setTimeout(() => {
-        this.isShowDialog = true;
-      }, 10);
-    },
     btnAddOnClick() {
       this.isShowDialog = true;
       this.dialogMode = "add";
@@ -112,24 +114,64 @@ export default {
       }, 100);
       this.myEmployeeId = employeeId;
     },
+    // load() {
+    //   /**
+    //    * Gọi api lấy dữ liệu
+    //    * Author: TrungTQ(18/06/2022)
+    //    */
+    //   try {
+    //     var me = this;
+    //     EmployeeApi.getAll()
+    //       .then(function (emp) {
+    //         me.tableDataList = emp.data;
+    //         console.log(emp);
+    //       })
+    //       .catch(function (emp) {
+    //         console.log(emp);
+    //       });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    /**
+     * Thay đổi pagingSize
+     * @param newPagingSize
+     * Author TrungTQ
+     */
+    changePagingSize(newPagingSize) {
+      this.pagingSize = newPagingSize;
+      this.load();
+    },
+    /**
+     * Thay đổi currentPage
+     * @param newCurentPage
+     * Author TrungTQ
+     */
+    changeCurrentPage(newCurentPage) {
+      this.currentPage = newCurentPage;
+      this.load();
+    },
+    /**
+     * Từ searchTerms, pagingSize, currentPage => load ra query tương ứng để gọi api filter
+     * Author TrungTQ
+     * */
+    getQueryStringFilter() {
+      var paramStrs = `pageSize=${this.pagingSize}&pageNumber=${this.currentPage}`;
+      return paramStrs;
+    },
+    /**
+     * Gọi api filter để thực hiện lấy dữ liệu đã được tìm kiếm và phân trang,
+     * nhận res.data là list employee truyền cho Table và ToltalRecord để truyền cho pagingBar
+     * Author TrungTQ
+     * */
     load() {
-      /**
-       * Gọi api lấy dữ liệu
-       * Author: TrungTQ(18/06/2022)
-       */
-      try {
-        var me = this;
-        EmployeeApi.getAll()
-          .then(function (emp) {
-            me.tableDataList = emp.data;
-            console.log(emp);
-          })
-          .catch(function (emp) {
-            console.log(emp);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      // LoaderEventBus.$emit("showLoader");
+      var vm = this;
+      EmployeeApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
+        vm.tableDataList = res.data.Data;
+        vm.totalRecord = res.data.TotalRecord;
+        // LoaderEventBus.$emit("hideLoader");
+      });
     },
   },
 

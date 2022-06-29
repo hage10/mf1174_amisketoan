@@ -255,7 +255,7 @@ import EmployeeApi from "@/api/entities/EmployeeApi.js";
 import DepartmentApi from "@/api/entities/DepartmentApi.js";
 import { required, helpers } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-// import { EmployeeModel } from "@/models/EmployeeModels";
+import { EmployeeModel } from "@/models/EmployeeModels";
 import FormatData from "../../utils/Format.js";
 
 export default {
@@ -378,14 +378,30 @@ export default {
       } else {
         if (this.mode == "add") {
           EmployeeApi.add(this.employeeModel)
-            .then((res) => {
+            .then(async(res) => {
               console.log(res);
               this.emitter.emit("showMes", "Thêm mới thành công!###success");
               this.emitter.emit("load");
               if (modeStatus == "save") {
                 this.$emit("closeForm");
               } else if (modeStatus == "saveandadd") {
-                this.$emit("reOpenForm");
+                let newEmployeeCode;
+                await EmployeeApi.getNewCode()
+                  .then((res) => {
+                    newEmployeeCode = res.data;
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+                this.employeeModel = Object.assign({}, EmployeeModel);
+                this.employeeModel.EmployeeCode = newEmployeeCode;
+                this.employeeModel.Gender = 1;
+                this.touched = {
+                  employeeCode: false,
+                  employeeName: false,
+                  departmentId: false,
+                };
+                this.$refs.txtEmployeeCodeRef.focus();
               }
             })
             .catch((err) => {
@@ -419,7 +435,7 @@ export default {
               }
             });
         } else {
-          EmployeeApi.update(this.employeeId,this.employeeModel)
+          EmployeeApi.update(this.employeeId, this.employeeModel)
             .then(async (res) => {
               console.log(res);
               this.emitter.emit("showMes", "Cập nhật thành công!###success");
@@ -427,24 +443,23 @@ export default {
               if (modeStatus == "save") {
                 this.$emit("closeForm");
               } else if (modeStatus == "saveandadd") {
-                this.$emit("reOpenForm");
-                // let newEmployeeCode;
-                // await EmployeeApi.getNewCode()
-                //   .then((res) => {
-                //     newEmployeeCode = res.data;
-                //   })
-                //   .catch((err) => {
-                //     console.log(err);
-                //   });
-                // this.employeeModel = Object.assign({}, EmployeeModel);
-                // this.employeeModel.EmployeeCode = newEmployeeCode;
-                // this.employeeModel.Gender = 1;
-                // this.touched = {
-                //   employeeCode: false,
-                //   employeeName: false,
-                //   departmentId: false,
-                // };
-                // this.$refs.txtEmployeeCodeRef.focus();
+                let newEmployeeCode;
+                await EmployeeApi.getNewCode()
+                  .then((res) => {
+                    newEmployeeCode = res.data;
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+                this.employeeModel = Object.assign({}, EmployeeModel);
+                this.employeeModel.EmployeeCode = newEmployeeCode;
+                this.employeeModel.Gender = 1;
+                this.touched = {
+                  employeeCode: false,
+                  employeeName: false,
+                  departmentId: false,
+                };
+                this.$refs.txtEmployeeCodeRef.focus();
               }
             })
             .catch((err) => {
@@ -481,7 +496,7 @@ export default {
       }
     },
 
-        /**
+    /**
      * Ấn icon X trong form thêm mới nhân viên
      * author: TrungTQ (20/06/2022)
      */
