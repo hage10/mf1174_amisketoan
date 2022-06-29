@@ -12,6 +12,11 @@
     border: 1px solid #019160;
 }
 
+::placeholder {
+    font-family: "GoogleSans-Italic";
+    font-size: 13px;
+}
+
 .m-input-icon {
     background: url('../assets//imgs/Sprites.64af8f61.svg') no-repeat -956px -31px;
 }

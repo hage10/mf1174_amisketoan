@@ -15,15 +15,14 @@
         <div class="toolbar-left"></div>
         <div class="toolbar-right">
           <div class="input-search-wrapper">
-            <Input
-              inputClass="input-search"
-              inputType="text"
-              inputPlacehoder="Tìm theo mã, tên nhân viên"
-              :inputValue="searchTerms"
+            <input
+              type="text"
+              class="m-input"
+              placeholder="Tìm theo mã, tên nhân viên"
               v-model="searchTerms"
-              @inputOnEnter="enterSearch"
+              @keyup.enter="enterSearch"
             />
-            <div class="icon-search"></div>
+            <div class="icon-search" @click="enterSearch"></div>
           </div>
           <div class="btn-refresh reload-icon" @click="btnRefreshOnClick"></div>
         </div>
@@ -62,7 +61,7 @@
 
 <script>
 import Button from "../../components/base/Button.vue";
-import Input from "../../components/base/Input.vue";
+// import Input from "../../components/base/Input.vue";
 import TheTable from "../../components/base/Table.vue";
 import PagingBar from "../../components/base/PagingBar.vue";
 import EmployeeApi from "../../api/entities/EmployeeApi";
@@ -73,7 +72,7 @@ export default {
   name: "TheEmployeeList",
   components: {
     Button,
-    Input,
+    // Input,
     TheTable,
     PagingBar,
     EmployeeDetail,
@@ -94,6 +93,8 @@ export default {
       isShowDialog: false,
       dialogMode: "",
       isReOpenDialog: false,
+      // lưu giá trị nhận được từ inputSearch
+      searchTerms: "",
     };
   },
   methods: {
@@ -114,25 +115,7 @@ export default {
       }, 100);
       this.myEmployeeId = employeeId;
     },
-    // load() {
-    //   /**
-    //    * Gọi api lấy dữ liệu
-    //    * Author: TrungTQ(18/06/2022)
-    //    */
-    //   try {
-    //     var me = this;
-    //     EmployeeApi.getAll()
-    //       .then(function (emp) {
-    //         me.tableDataList = emp.data;
-    //         console.log(emp);
-    //       })
-    //       .catch(function (emp) {
-    //         console.log(emp);
-    //       });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+
     /**
      * Thay đổi pagingSize
      * @param newPagingSize
@@ -157,6 +140,9 @@ export default {
      * */
     getQueryStringFilter() {
       var paramStrs = `pageSize=${this.pagingSize}&pageNumber=${this.currentPage}`;
+      if (this.searchTerms !== undefined && this.searchTerms !== "") {
+        paramStrs += `&employeeFilter=${this.searchTerms}`;
+      }
       return paramStrs;
     },
     /**
@@ -172,6 +158,14 @@ export default {
         vm.totalRecord = res.data.TotalRecord;
         // LoaderEventBus.$emit("hideLoader");
       });
+    },
+    /**
+     * Thực hiện tìm kiếm khi enter input search
+     * Author HieuNV
+     * */
+    enterSearch() {
+      this.currentPage = 1;
+      this.load();
     },
   },
 

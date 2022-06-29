@@ -158,4 +158,7 @@ export default {
 .border-red {
   border: 1px solid red !important;
 }
+*{
+  font-family: "GoogleSans-Regular";
+}
 </style>
