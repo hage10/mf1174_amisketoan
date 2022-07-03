@@ -82,17 +82,13 @@ export default {
 
           break;
         case "y":
-          if (
-            this.modeForPopup == "saveChange"
-          ) {
+          if (this.modeForPopup == "saveChange") {
             this.isShowPopup = false;
             this.emitter.emit("hideDialog");
           }
           break;
         case "z":
-          if (
-            this.modeForPopup == "saveChange"
-          ) {
+          if (this.modeForPopup == "saveChange") {
             this.isShowPopup = false;
           }
           break;
@@ -158,7 +154,33 @@ export default {
 .border-red {
   border: 1px solid red !important;
 }
-*{
+* {
   font-family: "GoogleSans-Regular";
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b8bcc3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888888;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 10px;
+  background-color: #f1f1f1;
+  z-index: 30000;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #b8bcc3;
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: #888888;
 }
 </style>

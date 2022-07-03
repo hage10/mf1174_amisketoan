@@ -41,11 +41,20 @@ export default {
       var positionStr = "top: " + top + "px; left: " + left + "px;";
       this.emitter.emit("hideFunctionList");
       setTimeout(() => {
-        // EventBus.$emit('showFunctionList', positionStr, this.toolId, this.toolCode);
         this.emitter.emit(
           "showFunctionList",
           `${positionStr}###${this.toolId}###${this.toolCode}`
         );
+      }, 200);
+    },
+    /**
+     * Sự kiện khi blur btn moreOption
+     * Author TrungTQ
+     * */
+    btnOptionOnBlur() {
+      this.isSelect = false;
+      setTimeout(() => {
+        this.emitter.emit("hideFunctionList");
       }, 200);
     },
     /**

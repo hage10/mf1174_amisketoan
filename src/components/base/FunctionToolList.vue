@@ -14,7 +14,6 @@
 <script>
 
 import EmployeeApi from "../../api/entities/EmployeeApi";
-// import ResourceVn from "../../resources/ResourceVn.js"
 
 export default {
   name: "FunctionToolList",
@@ -32,10 +31,10 @@ export default {
     //  * Sự kiện khi click nhân bản
     //  * Author TrungTQ
     //  * */
-    // btnCloneOnClick() {
-    //     this.isHide = true;
-    //     EventBus.$emit('cloneEmployee',this.myEmployeeId);
-    // },
+    btnCloneOnClick() {
+        // this.isHide = true;
+        this.emitter.emit('cloneEmployee',this.myEmployeeId);
+    },
     // /**
     //  * Sự kiện khi click Xóa
     //  * Author TrungTQ
@@ -49,17 +48,18 @@ export default {
     },
   },
   created() {
+    //sự kiện lắng nghe mở function list
     this.emitter.on("showFunctionList", (a) => {
       this.functionListPositionStr = a.split("###")[0];
       this.myEmployeeId = a.split("###")[1];
       this.myEmployeeCode = a.split("###")[2];
       this.isHide = false;
     });
-
+    //sự kiện lắng nghe ẩn function list
     this.emitter.on("hideFunctionList", () => {
       this.isHide = true;
     });
-
+    //sự kiện lắng nghe xác nhận xóa nhân viên
     this.emitter.on("confirmToDelete", () => {
       EmployeeApi.delete(this.myEmployeeId)
         .then((res) => {
@@ -73,14 +73,6 @@ export default {
         });
     });
 
-    //     EventBus.$on('confirmToDelete', () => {
-    //         EmployeeApi.delete(this.myEmployeeId).then(()=> {
-    //             ToastMessengerEventBus.$emit('showMes', "Đã xóa thành công!", 'success');
-    //             EventBus.$emit('loadTableData');
-    //         }).catch(error => {
-    //             console.log(error.response);
-    //         })
-    //     })
   },
 };
 </script>

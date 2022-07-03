@@ -81,6 +81,7 @@ export default {
     //khi nhận được sự thay dổi reSelect => người dùng chọn lại => thay đổi text
     reSelect() {
       this.listItem.forEach((item) => {
+        
         if (item.DepartmentId == this.comboboxValue) {
           this.comboboxText = item.DepartmentName;
           console.log(4332533);

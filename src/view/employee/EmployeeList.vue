@@ -28,21 +28,19 @@
         </div>
       </div>
     </div>
-    <div class="trungtrung">
-      <div class="table-paging">
-        <TheTable
-          :tableColumns="tableColumns"
-          :tableDataList="tableDataList"
-          @chooseAnEmployee="chooseAnEmployee"
-        ></TheTable>
-        <PagingBar
-          :totalRecord="totalRecord"
-          :pagingSize="pagingSize"
-          :currentPage="currentPage"
-          @changePagingSize="changePagingSize"
-          @changeCurrentPage="changeCurrentPage"
-        />
-      </div>
+    <div class="table-paging">
+      <TheTable
+        :tableColumns="tableColumns"
+        :tableDataList="tableDataList"
+        @chooseAnEmployee="chooseAnEmployee"
+      ></TheTable>
+      <PagingBar
+        :totalRecord="totalRecord"
+        :pagingSize="pagingSize"
+        :currentPage="currentPage"
+        @changePagingSize="changePagingSize"
+        @changeCurrentPage="changeCurrentPage"
+      />
     </div>
 
     <EmployeeDetail
@@ -61,18 +59,15 @@
 
 <script>
 import Button from "../../components/base/Button.vue";
-// import Input from "../../components/base/Input.vue";
 import TheTable from "../../components/base/Table.vue";
 import PagingBar from "../../components/base/PagingBar.vue";
 import EmployeeApi from "../../api/entities/EmployeeApi";
-
 import { employeeColumns } from "./EmployeeColumns.js";
 import EmployeeDetail from "./EmployeeDetail.vue";
 export default {
   name: "TheEmployeeList",
   components: {
     Button,
-    // Input,
     TheTable,
     PagingBar,
     EmployeeDetail,
@@ -98,6 +93,10 @@ export default {
     };
   },
   methods: {
+    /**
+     * Ấn button thêm mới nhân viên
+     * Author: TrungTQ
+     */
     btnAddOnClick() {
       this.isShowDialog = true;
       this.dialogMode = "add";
@@ -161,7 +160,7 @@ export default {
     },
     /**
      * Thực hiện tìm kiếm khi enter input search
-     * Author HieuNV
+     * Author TrungTQ
      * */
     enterSearch() {
       this.currentPage = 1;
@@ -183,14 +182,23 @@ export default {
     this.emitter.on("hideDialog", () => {
       this.isShowDialog = false;
     });
+    // lắng nghe sự kiện nhân bản nhân viên
+    this.emitter.on("cloneEmployee", (employeeId) => {
+      this.isShowDialog = true;
+      this.dialogMode = "clone";
+      this.myEmployeeId = employeeId;
+    });
   },
 };
 </script>
 
 <style>
 @import url(../../css/icon-position.css);
-
+.title-content {
+  font-size: 24px;
+}
 .employee-content {
+  overflow: auto;
   background-color: #f4f5f8;
   float: left;
   width: 100%;
@@ -198,19 +206,6 @@ export default {
   padding-left: 20px;
   padding-right: 30px;
   box-sizing: border-box;
-  overflow: scroll;
-}
-.employee-content::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.employee-content::-webkit-scrollbar-thumb {
-  background: #b8bcc3;
-}
-
-.employee-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
 }
 
 .employee-content .employee-header {
@@ -221,7 +216,7 @@ export default {
   box-sizing: border-box;
   float: left;
   position: sticky;
-  left: 0;
+    left: 0;
 }
 
 .employee-content .employee-header .header-row {
@@ -231,9 +226,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.title-content {
-  font-size: 24px;
 }
 
 .employee-content .employee-header .header-row {
@@ -335,8 +327,6 @@ export default {
   height: 32px;
   position: relative;
   margin-right: 10px;
-  font-style: italic;
-  font-size: 11px;
 }
 
 .input-search-wrapper .icon-search {
@@ -346,7 +336,7 @@ export default {
 }
 
 .btn-refresh {
-  margin: 4px 6px;
+  margin: 0px 6px;
   cursor: pointer;
 }
 
@@ -363,12 +353,11 @@ export default {
   background-position: -705px -257px;
 }
 
-.trungtrung {
-  background: #111111;
-  width: auto;
-  z-index: 100000;
-}
 .table-paging {
+  overflow: unset;
+  width: 100%;
+  /*height: auto;*/
+  height: calc(100% - 152px);
   background-color: #f4f5f8;
   /*padding-right: 20px;*/
   /*padding-left: 20px;*/

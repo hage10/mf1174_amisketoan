@@ -177,152 +177,153 @@ export default {
 </script>
 
 <style scoped>
-.paging-bar button {
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  outline: 0;
-  background-color: #fff;
-  padding: 2px 6px;
-}
+    .paging-bar button{
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        outline: 0;
+        background-color: #fff;
+        padding: 2px 6px;
+    }
 
-span button {
-  border: 1px solid #fff;
-}
+    span button{
+        border: 1px solid #fff;
+    }
 
-.button-current-page {
-  border: 1px solid #e0e0e0 !important;
-  font-weight: 700;
-}
+    .button-current-page {
+        border: 1px solid #e0e0e0 !important;
+        font-weight: 700;
+    }
 
-span button:first-child {
-  margin-right: 10px;
-  margin-left: 15px;
-}
+        span button:first-child{
+            margin-right: 10px;
+            margin-left: 15px;
+        }
 
-span button:last-child {
-  margin-left: 10px;
-  margin-right: 30px;
-}
+    span button:last-child {
+        margin-left: 10px;
+        margin-right: 30px;
+    }
 
-.paging-bar {
-  height: 46px;
-  float: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-left: 20px solid #fff;
-  border-right: 20px solid #fff;
-  box-sizing: border-box;
-  background-color: #fff;
-  position: fixed;
-  left: 198px;
-  bottom: 10px;
-  right: 39px;
-  z-index: 1000;
-}
+    .paging-bar {
+        width: 100%;
+        height: 46px;
+        float: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-left: 20px solid #fff;
+        border-right: 20px solid #fff;
+        box-sizing:border-box;
+        background-color: #fff;
+        position: sticky;
+        left: 0;
+        z-index: 1000;
+        bottom: 0px;
+    }
 
-.paging-left {
-  line-height: 46px;
-  width: auto;
-}
+    .paging-left{
+        line-height: 46px;
+        width: auto;
+    }
 
-.paging-left span {
-  font-weight: 700;
-}
+    .paging-left span{
+        font-weight: 700;
+    }
 
-.dropdown-paging {
-  width: 205px;
-  height: 32px;
-  position: relative;
-}
+    .dropdown-paging{
+        width: 205px;
+        height: 32px;
+        position: relative;
+    }
 
-.dropdown-main {
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  background-color: #fff;
-  border: 1px solid #babec5;
-  box-sizing: border-box;
-}
+    .dropdown-main {
+        width: 100%;
+        height: 100%;
+        border-radius: 2px;
+        background-color: #fff;
+        border: 1px solid #BABEC5;
+        box-sizing: border-box;
+    }
 
-.dropdown-main p {
-  line-height: 30px;
-  margin: 0;
-  padding: 0;
-  padding: 0 42px 0 10px;
-}
+    .dropdown-main p{
+        line-height: 30px;
+        margin: 0;
+        padding: 0;
+        padding: 0 42px 0 10px;
+    }
 
-.dropdown-choose {
-  border: 0;
-  outline: 0;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  width: 32px;
-  height: 30px;
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  border-top-right-radius: 1px;
-  border-bottom-right-radius: 1px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .dropdown-choose{
+        border:0;
+        outline:0;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        width: 32px;
+        height: 30px;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        border-top-right-radius: 1px;
+        border-bottom-right-radius: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.rotate-icon {
-  transform: rotate(180deg);
-  transition: 0.1s;
-}
+    .rotate-icon{
+        transform: rotate(180deg);
+        transition: 0.1s;
+    }
 
-.dropdown-choose:hover {
-  background-color: #e0e0e0;
-}
+    .dropdown-choose:hover {
+        background-color: #E0E0E0;
+    }
 
-.dropdown-list {
-  z-index: 21000;
-  background-color: #fff;
-  width: 100%;
-  height: auto;
-  padding: 2px 0;
-  border: 1px solid #babec5;
-  border-radius: 2px;
-  position: absolute;
-  left: 0;
-  bottom: 34px;
-  box-sizing: border-box;
-}
+    .dropdown-list {
+        z-index: 21000;
+        background-color: #fff;
+        width: 100%;
+        height: auto;
+        padding: 2px 0;
+        border: 1px solid #BABEC5;
+        border-radius: 2px;
+        position: absolute;
+        left: 0;
+        bottom : 34px;
+        box-sizing: border-box;
+    }
 
-.dropdown-list-down {
-  bottom: 34px !important;
+    .dropdown-list-down{
+        top: 34px !important;
+        bottom: auto;
+    }
 
-}
+    .dropdown-item {
+        width: 100%;
+        height: 32px;
+        line-height: 32px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        cursor: pointer;
 
-.dropdown-item {
-  width: 100%;
-  height: 32px;
-  line-height: 32px;
-  padding: 0 10px;
-  box-sizing: border-box;
-  cursor: pointer;
-}
+    }
 
-.dropdown-item:hover {
-  background-color: #ebedf0;
-  color: #2ca01c;
-}
+        .dropdown-item:hover {
+            background-color: #EBEDF0;
+            color: #2CA01C;
+        }
 
-.dropdown-item-active {
-  background-color: #2ca01c !important;
-  color: #fff !important;
-}
+    .dropdown-item-active {
+        background-color: #2CA01C !important;
+        color: #fff !important;
+    }
 
-.paging-right {
-  width: auto;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+    .paging-right{
+        width: auto;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 </style>

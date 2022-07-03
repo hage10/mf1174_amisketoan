@@ -14,7 +14,7 @@
         <th
           style="
             position: sticky;
-            left: 20px;
+            left: 0;
             z-index: 10000;
             background-color: #eceef1;
           "
@@ -43,7 +43,7 @@
         <th
           style="
             position: sticky;
-            right: 20px;
+            right: 0;
             z-index: 10000;
             background-color: #eceef1;
           "
@@ -68,7 +68,7 @@
           <td
             style="
               position: sticky;
-              left: 20px;
+              left: 0;
               z-index: 900;
               background-color: #fff;
             "
@@ -103,7 +103,7 @@
           <td
             style="
               position: sticky;
-              right: 20px;
+              right: 0;
               z-index: 900;
               background-color: #fff;
             "
@@ -182,14 +182,7 @@ export default {
       console.log(employeeId);
       this.$emit("chooseAnEmployee", employeeId);
     },
-    // /**
-    //  * Sự kiện khi click btn sửa trên các dòng
-    //  * @param employeeId
-    //  * Author TrungTQ
-    //  */
-    // btnEditOnClick(employeeId) {
-    //   this.$emit("chooseAnEmployee", employeeId);
-    // },
+
     /**
      * Sự kiên khi click checkbox trên các hàng
      * @param id
@@ -213,92 +206,92 @@ export default {
 
 <style >
 .grid {
-  width: 100%;
-  height: auto;
-  max-height: calc(100% - 46px);
+        width: 100%;
+        height: auto;
+        max-height: calc(100% - 46px);
+        overflow: scroll;
+        background-color: #fff;
+        box-sizing: border-box;
+        float: left;
+        border-left: 20px solid #fff;
+        border-right: 20px solid #fff;
+    }
 
-  background-color: #fff;
-  box-sizing: border-box;
-  float: left;
-  border-left: 20px solid #fff;
-  border-right: 20px solid #fff;
-}
+    table {
+        border-collapse: collapse;
+        width: auto;
+        height: auto;
+        display: table;
+    }
 
-table {
-  border-collapse: collapse;
-  width: inherit;
-  height: auto;
-  display: table;
-}
+    thead {
+        width: auto;
+        height: auto;
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        box-sizing: border-box;
+    }
 
-thead {
-  width: auto;
-  height: auto;
-  position: sticky;
-  top: 0;
-  background-color: #fff;
-  box-sizing: border-box;
-}
+    tbody {
+        height: auto;
+        width: 100%;
+    }
 
-tbody {
-  height: auto;
-  width: 100%;
-}
+    td,
+    th {
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+    }
 
-td,
-th {
-  overflow: hidden !important;
-  white-space: nowrap !important;
-  text-overflow: ellipsis !important;
-}
+    th {
+        font-size: 13px;
+        position: sticky;
+        top: 0;
+        z-index: 300;
+        background-color: #ECEEF1;
+        height: 34px;
+        box-shadow: inset 0 -1px 0 #c7c7c7;
+        padding-bottom: 1px 0;
+    }
 
-th {
-  font-size: 13px;
-  position: sticky;
-  top: 0;
-  z-index: 300;
-  background-color: #eceef1;
-  height: 34px;
-  box-shadow: inset 0 -1px 0 #c7c7c7;
-  padding-bottom: 1px 0;
-}
+        th p {
+            display: block;
+            margin: 0;
+            border-right: 1px solid #c7c7c7;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 34px;
+        }
 
-th p {
-  display: block;
-  margin: 0;
-  border-right: 1px solid #c7c7c7;
-  padding-left: 10px;
-  padding-right: 10px;
-  line-height: 34px;
-}
+    td {
+        height: 44px;
+        box-sizing: border-box;
+    }
 
-td {
-  height: 44px;
-  box-sizing: border-box;
-}
+        td p {
+            height: 44px;
+            display: block;
+            margin: 0;
+            border-right: 1px dotted #c7c7c7;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 44px;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+        }
 
-td p {
-  height: 44px;
-  display: block;
-  margin: 0;
-  border-right: 1px dotted #c7c7c7;
-  padding-left: 10px;
-  padding-right: 10px;
-  line-height: 44px;
-  overflow: hidden !important;
-  white-space: nowrap !important;
-  text-overflow: ellipsis !important;
-}
+    tbody tr {
+        border-bottom: 1px solid #c7c7c7;
+    }
 
-tbody tr {
-  border-bottom: 1px solid #c7c7c7;
-}
+        tbody tr:hover {
+            background-color: #F3F8F8 !important;
+        }
 
-tbody tr:hover {
-  background-color: #f3f8f8 !important;
-}
-
-tbody tr:hover td {
-  background-color: #f3f8f8 !important;
-}
+            tbody tr:hover td {
+                background-color: #F3F8F8 !important;
+            }
 </style>
