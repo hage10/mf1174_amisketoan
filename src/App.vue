@@ -13,18 +13,21 @@
     :isShowMes="isShowMes"
     @hideMes="hideMes"
   />
+  <Loader :isShowLoader="isShowLoader" />
 </template>
 
 <script>
 import TheContainer from "./components/layout/TheContainer.vue";
 import Popup from "./components/base/Popup.vue";
 import ToatmMessenger from "./components/base/ToastMessenger.vue";
+import Loader from './components/base/Loader.vue'
 export default {
   name: "App",
   components: {
     TheContainer,
     Popup,
     ToatmMessenger,
+    Loader,
   },
   data() {
     return {
@@ -38,6 +41,7 @@ export default {
       popupType: "",
       listButton: "",
       modeForPopup: "",
+      isShowLoader: false,
     };
   },
   created() {
@@ -62,6 +66,12 @@ export default {
       this.mesType = b.split("###")[1];
       this.isShowMes = true;
     });
+    this.emitter.on("showLoader",()=>{
+      this.isShowLoader= true;
+    });
+    this.emitter.on("hideLoader",()=>{
+      this.isShowLoader=false;
+    })
   },
   methods: {
     /**

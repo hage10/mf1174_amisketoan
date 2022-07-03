@@ -127,6 +127,7 @@
         </tr>
       </tbody>
     </table>
+    <slot name="pagingbar"></slot>
     <FunctionToolList/>
   </div>
 </template>
@@ -207,8 +208,9 @@ export default {
 <style >
 .grid {
         width: 100%;
-        height: auto;
-        max-height: calc(100% - 46px);
+        height: 100%;
+
+        /* max-height: calc(100% - 46px); */
         overflow: scroll;
         background-color: #fff;
         box-sizing: border-box;
@@ -219,8 +221,8 @@ export default {
 
     table {
         border-collapse: collapse;
-        width: auto;
-        height: auto;
+        width: 100%;
+        height: 100%;
         display: table;
     }
 

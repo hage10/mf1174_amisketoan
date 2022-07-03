@@ -33,14 +33,17 @@
         :tableColumns="tableColumns"
         :tableDataList="tableDataList"
         @chooseAnEmployee="chooseAnEmployee"
-      ></TheTable>
-      <PagingBar
-        :totalRecord="totalRecord"
-        :pagingSize="pagingSize"
-        :currentPage="currentPage"
-        @changePagingSize="changePagingSize"
-        @changeCurrentPage="changeCurrentPage"
-      />
+      >
+        <template v-slot:pagingbar="{}">
+          <PagingBar
+            :totalRecord="totalRecord"
+            :pagingSize="pagingSize"
+            :currentPage="currentPage"
+            @changePagingSize="changePagingSize"
+            @changeCurrentPage="changeCurrentPage"
+          />
+        </template>
+      </TheTable>
     </div>
 
     <EmployeeDetail
@@ -150,12 +153,12 @@ export default {
      * Author TrungTQ
      * */
     load() {
-      // LoaderEventBus.$emit("showLoader");
+      this.emitter.emit("showLoader");
       var vm = this;
       EmployeeApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
         vm.tableDataList = res.data.Data;
         vm.totalRecord = res.data.TotalRecord;
-        // LoaderEventBus.$emit("hideLoader");
+        this.emitter.emit("hideLoader");
       });
     },
     /**
@@ -206,6 +209,10 @@ export default {
   padding-left: 20px;
   padding-right: 30px;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  position: relative;
+  flex: 1;
+  min-height: 0;
 }
 
 .employee-content .employee-header {
@@ -216,7 +223,7 @@ export default {
   box-sizing: border-box;
   float: left;
   position: sticky;
-    left: 0;
+  left: 0;
 }
 
 .employee-content .employee-header .header-row {
