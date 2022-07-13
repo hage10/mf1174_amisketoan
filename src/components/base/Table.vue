@@ -206,11 +206,10 @@ export default {
 </script>
 
 <style >
-.grid {
+    .grid {
         width: 100%;
-        height: 100%;
-
-        /* max-height: calc(100% - 46px); */
+        height: auto;
+        max-height: calc(100% - 46px);
         overflow: scroll;
         background-color: #fff;
         box-sizing: border-box;
@@ -221,8 +220,8 @@ export default {
 
     table {
         border-collapse: collapse;
-        width: 100%;
-        height: 100%;
+        width: auto;
+        height: auto;
         display: table;
     }
 

@@ -33,17 +33,14 @@
         :tableColumns="tableColumns"
         :tableDataList="tableDataList"
         @chooseAnEmployee="chooseAnEmployee"
-      >
-        <template v-slot:pagingbar="{}">
-          <PagingBar
-            :totalRecord="totalRecord"
-            :pagingSize="pagingSize"
-            :currentPage="currentPage"
-            @changePagingSize="changePagingSize"
-            @changeCurrentPage="changeCurrentPage"
-          />
-        </template>
-      </TheTable>
+      />
+      <PagingBar
+        :totalRecord="totalRecord"
+        :pagingSize="pagingSize"
+        :currentPage="currentPage"
+        @changePagingSize="changePagingSize"
+        @changeCurrentPage="changeCurrentPage"
+      />
     </div>
 
     <EmployeeDetail

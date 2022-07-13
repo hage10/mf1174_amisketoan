@@ -418,7 +418,6 @@ export default {
     },
     async save(modeButton) {
       //bắt đầu thực hiện check validate
-      alert(232342343)
       this.touched = {
         employeeCode: true,
         employeeName: true,
