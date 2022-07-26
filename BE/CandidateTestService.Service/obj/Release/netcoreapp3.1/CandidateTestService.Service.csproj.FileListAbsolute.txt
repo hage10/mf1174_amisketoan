@@ -1,0 +1,15 @@
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Service.deps.json
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Service.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Service.pdb
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Core.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Repository.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Core.pdb
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\bin\Release\netcoreapp3.1\CandidateTestService.Repository.pdb
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.csproj.AssemblyReference.cache
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.AssemblyInfoInputs.cache
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.AssemblyInfo.cs
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.csproj.CoreCompileInputs.cache
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.csproj.CopyComplete
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Service\obj\Release\netcoreapp3.1\CandidateTestService.Service.pdb

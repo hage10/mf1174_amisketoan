@@ -1,0 +1,299 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Api\\CandidateTestService.Api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Api\\CandidateTestService.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Api\\CandidateTestService.Api.csproj",
+        "projectName": "CandidateTestService.Api",
+        "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Api\\CandidateTestService.Api.csproj",
+        "packagesPath": "C:\\Users\\utngo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\utngo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj": {
+                "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj"
+              },
+              "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Service\\CandidateTestService.Service.csproj": {
+                "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Service\\CandidateTestService.Service.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.21, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.21, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.21, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.21, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.17.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj",
+        "projectName": "CandidateTestService.Core",
+        "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj",
+        "packagesPath": "C:\\Users\\utngo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\utngo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Repository\\CandidateTestService.Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Repository\\CandidateTestService.Repository.csproj",
+        "projectName": "CandidateTestService.Repository",
+        "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Repository\\CandidateTestService.Repository.csproj",
+        "packagesPath": "C:\\Users\\utngo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Repository\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\utngo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj": {
+                "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.21, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.19, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Service\\CandidateTestService.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Service\\CandidateTestService.Service.csproj",
+        "projectName": "CandidateTestService.Service",
+        "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Service\\CandidateTestService.Service.csproj",
+        "packagesPath": "C:\\Users\\utngo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\utngo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj": {
+                "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj"
+              },
+              "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Repository\\CandidateTestService.Repository.csproj": {
+                "projectPath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Repository\\CandidateTestService.Repository.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

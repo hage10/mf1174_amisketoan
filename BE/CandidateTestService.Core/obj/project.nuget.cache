@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "l6lO0aMGkdGi1zZOFYgP2bY4Z1V0kpvzEx6BHzeUENgo/D0MxocgrHk2WcSlSpgyPeXxNqukc+N/DLK45RFYOA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\utngo\\OneDrive\\Máy tính\\EFCore\\CandidateTestService.Core\\CandidateTestService.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\utngo\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,13 @@
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\bin\Release\netcoreapp3.1\CandidateTestService.Repository.deps.json
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\bin\Release\netcoreapp3.1\CandidateTestService.Repository.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\bin\Release\netcoreapp3.1\CandidateTestService.Repository.pdb
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\bin\Release\netcoreapp3.1\CandidateTestService.Core.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\bin\Release\netcoreapp3.1\CandidateTestService.Core.pdb
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.csproj.AssemblyReference.cache
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.AssemblyInfoInputs.cache
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.AssemblyInfo.cs
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.csproj.CoreCompileInputs.cache
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.csproj.CopyComplete
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.dll
+C:\Users\utngo\OneDrive\Máy tính\EFCore\CandidateTestService.Repository\obj\Release\netcoreapp3.1\CandidateTestService.Repository.pdb
