@@ -106,13 +106,13 @@ export default {
      * @param employeeId
      * Author TrungTQ
      */
-    chooseAnEmployee(employeeId) {
+    chooseAnEmployee(id) {
       this.isShowDialog = true;
       this.dialogMode = "edit";
       setTimeout(() => {
         this.isReOpenDialog = !this.isReOpenDialog;
       }, 100);
-      this.myEmployeeId = employeeId;
+      this.myEmployeeId = id;
     },
 
     /**
@@ -140,7 +140,7 @@ export default {
     getQueryStringFilter() {
       var paramStrs = `pageSize=${this.pagingSize}&pageNumber=${this.currentPage}`;
       if (this.searchTerms !== undefined && this.searchTerms !== "") {
-        paramStrs += `&employeeFilter=${this.searchTerms}`;
+        paramStrs += `&searchTerms=${this.searchTerms}`;
       }
       return paramStrs;
     },
@@ -153,8 +153,9 @@ export default {
       this.emitter.emit("showLoader");
       var vm = this;
       EmployeeApi.getFilterPaging(this.getQueryStringFilter()).then((res) => {
-        vm.tableDataList = res.data.Data;
-        vm.totalRecord = res.data.TotalRecord;
+        console.log(res)
+        vm.tableDataList = res.data.data.data;
+        vm.totalRecord = res.data.data.totalRecord;
         this.emitter.emit("hideLoader");
       });
     },

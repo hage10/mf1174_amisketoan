@@ -55,7 +55,7 @@ export default class BaseApi {
      * @returns 
      */
     getNewCode() {
-        return BaseApiConfig.get(`${this.apiController}/NewEmployeeCode`);
+        return BaseApiConfig.get(`${this.apiController}/NewCode`);
     }
 
     /**
@@ -70,7 +70,7 @@ export default class BaseApi {
      * @param {any} paramStrs
      */
     getFilterPaging(paramStrs) {
-        return BaseApiConfig.get(`${this.apiController}/filter?${paramStrs}`);
+        return BaseApiConfig.get(`${this.apiController}/paging?${paramStrs}`);
     }
 
     /**

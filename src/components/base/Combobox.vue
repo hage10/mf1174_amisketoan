@@ -18,12 +18,12 @@
       <div
         class="combobox-item"
         v-for="item in listItemShow"
-        :key="item.DepartmentId"
+        :key="item.id"
         value="item.DepartmentId"
-        @click="comboboxItemOnClick(item.DepartmentId)"
-        :class="{ 'item-selected': item.DepartmentId == comboboxValue }"
+        @click="comboboxItemOnClick(item.id)"
+        :class="{ 'item-selected': item.id == comboboxValue }"
       >
-        <p class="Department-name">{{ item.DepartmentName }}</p>
+        <p class="Department-name">{{ item.departmentName }}</p>
       </div>
     </div>
   </div>
@@ -80,13 +80,18 @@ export default {
     },
     //khi nhận được sự thay dổi reSelect => người dùng chọn lại => thay đổi text
     reSelect() {
-      this.listItem.forEach((item) => {
+      if(!this.comboboxValue){
+        this.comboboxText = "";
+      }else{
+        this.listItem.forEach((item) => {
         
-        if (item.DepartmentId == this.comboboxValue) {
-          this.comboboxText = item.DepartmentName;
+        if (item.id == this.comboboxValue) {
+          this.comboboxText = item.departmentName;
           console.log(4332533);
         }
       });
+      }
+      
     },
   },
   methods: {
@@ -134,7 +139,7 @@ export default {
         this.listItemShow.push(item);
       });
       for (let i = 0; i < this.listItemShow.length; i++) {
-        if (this.comboboxValue == this.listItemShow[i].DepartmentId) {
+        if (this.comboboxValue == this.listItemShow[i].id) {
           this.index = i;
         }
       }

@@ -63,7 +63,7 @@
         <tr
           v-for="(item, index) in tableDataList"
           :key="index"
-          @dblclick="trOnDbClick(item.EmployeeId)"
+          @dblclick="trOnDbClick(item.id)"
         >
           <td
             style="
@@ -95,6 +95,12 @@
             <p v-if="column.formatType == 'ddmmyyyy'">
               {{ formatDate(item[column.fieldName]) }}
             </p>
+            <p v-else-if="column.formatType == 'departmentName'">
+              {{ item['department']['departmentName'] }}
+            </p>
+            <p v-else-if="column.formatType == 'gender'">
+              {{ getGender(item['gender']) }}
+            </p>
             <!-- <p v-else-if="column.formatType == 'gender'">
               {{ formatGender(item[column.fieldName]) }}
             </p> -->
@@ -118,8 +124,8 @@
               <FunctionTool
                 @showFunctionList="showFunctionList"
                 @hideFunctionList="hideFunctionList"
-                :toolId="item.EmployeeId"
-                :toolCode="item.EmployeeCode"
+                :toolId="item.id"
+                :toolCode="item.employeeCode"
                 @btnEditOnClick="btnEditOnClick"
               />
             </p>
@@ -150,6 +156,15 @@ export default {
     tableDataList: Array,
   },
   methods: {
+    getGender(number){
+      if(number == 1){
+        return "Nam"
+      }else if(number == 0){
+        return "Nữ"
+      }else{
+        return "Khác"
+      }
+    },
     /**
      * formatDate
      * @param _date
@@ -178,10 +193,10 @@ export default {
     /**
      * Sự kiện khi dbClick vào 1 hàng=> hiện dialog sửa
      * @param employeeId
-     */
-    trOnDbClick(employeeId) {
-      console.log(employeeId);
-      this.$emit("chooseAnEmployee", employeeId);
+     */ 
+    trOnDbClick(id) {
+      console.log(id);
+      this.$emit("chooseAnEmployee",id);
     },
 
     /**

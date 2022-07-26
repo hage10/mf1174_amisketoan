@@ -21,8 +21,7 @@
                   type="text"
                   class="m-input input-w-2"
                   ref="txtEmployeeCodeRef"
-                  v-model="employeeModel.EmployeeCode"
-                  :inputValue="employeeModel.EmployeeCode"
+                  v-model="employeeModel.employeeCode"
                   @focus="
                     () => {
                       touched.employeeCode = true;
@@ -30,7 +29,7 @@
                   "
                   :class="{
                     'border-red':
-                      v$.employeeModel.EmployeeCode.$invalid &&
+                      v$.employeeModel.employeeCode.$invalid &&
                       touched.employeeCode,
                   }"
                 />
@@ -40,7 +39,7 @@
                 <input
                   type="text"
                   class="m-input input-w-4"
-                  v-model="employeeModel.EmployeeName"
+                  v-model="employeeModel.fullName"
                   @focus="
                     () => {
                       touched.employeeName = true;
@@ -48,7 +47,7 @@
                   "
                   :class="{
                     'border-red':
-                      v$.employeeModel.EmployeeName.$invalid &&
+                      v$.employeeModel.fullName.$invalid &&
                       touched.employeeName,
                   }"
                 />
@@ -60,7 +59,7 @@
                 <input
                   type="date"
                   class="m-input input-w-2"
-                  v-model="employeeModel.DateOfBirth"
+                  v-model="employeeModel.dateOfBirth"
                 />
               </div>
               <div class="prop-item">
@@ -79,7 +78,7 @@
                         name="gender"
                         type="radio"
                         :value="option.id"
-                        v-model="employeeModel.Gender"
+                        v-model="employeeModel.gender"
                       />
                       <span class="m-radiocheck">
                         <span class="image-radio"></span>
@@ -99,18 +98,18 @@
                   :listItem="listDepartment"
                   @cbbOnBlur="
                     () => {
-                      if (!employeeModel.DepartmentId)
+                      if (!employeeModel.departmentId)
                         touched.departmentId = true;
                     }
                   "
                   @comboboxOnSelect="comboboxOnSelect"
-                  :comboboxValue="employeeModel.DepartmentId"
+                  :comboboxValue="employeeModel.departmentId"
                   :isBorderRed="
-                    v$.employeeModel.DepartmentId.$invalid &&
+                    v$.employeeModel.departmentId.$invalid &&
                     touched.departmentId
                   "
                   :reSelect="reSelectCbb"
-                  v-model="employeeModel.DepartmentName"
+                  v-model="employeeModel.departmentName"
                 />
               </div>
             </div>
@@ -120,7 +119,7 @@
                 <input
                   type="text"
                   class="m-input input-w-4"
-                  v-model="employeeModel.IdentityNumber"
+                  v-model="employeeModel.identityNumber"
                 />
               </div>
               <div class="prop-item">
@@ -128,8 +127,8 @@
                 <input
                   type="date"
                   class="m-input input-w-2"
-                  v-model="employeeModel.IdentityDate"
-                  :inputValue="formatDateToValue(employeeModel.IdentityPlace)"
+                  v-model="employeeModel.identityDate"
+                  :inputValue="formatDateToValue(employeeModel.identityPlace)"
                 />
               </div>
             </div>
@@ -141,7 +140,7 @@
                 <input
                   type="text"
                   class="m-input input-w-6"
-                  v-model="employeeModel.EmployeePosition"
+                  v-model="employeeModel.employeePosition"
                 />
               </div>
             </div>
@@ -151,7 +150,7 @@
                 <input
                   type="text"
                   class="m-input input-w-6"
-                  v-model="employeeModel.IdentityPlace"
+                  v-model="employeeModel.identityPlace"
                 />
               </div>
             </div>
@@ -164,7 +163,7 @@
               <input
                 type="text"
                 class="m-input input-w-12"
-                v-model="employeeModel.Address"
+                v-model="employeeModel.address"
               />
             </div>
           </div>
@@ -174,7 +173,7 @@
               <input
                 type="text"
                 class="m-input input-w-3"
-                v-model="employeeModel.PhoneNumber"
+                v-model="employeeModel.phoneNumber"
               />
             </div>
             <div class="prop-item w-205">
@@ -182,7 +181,7 @@
               <input
                 type="text"
                 class="m-input input-w-3"
-                v-model="employeeModel.TelephoneNumber"
+                v-model="employeeModel.telephoneNumber"
               />
             </div>
             <div class="prop-item w-205">
@@ -190,7 +189,7 @@
               <input
                 type="text w-205"
                 class="m-input input-w-3"
-                v-model="employeeModel.Email"
+                v-model="employeeModel.email"
               />
             </div>
           </div>
@@ -200,7 +199,7 @@
               <input
                 type="text"
                 class="m-input input-w-3"
-                v-model="employeeModel.BankAccountNumber"
+                v-model="employeeModel.bankAccountNumber"
               />
             </div>
             <div class="prop-item w-205">
@@ -208,7 +207,7 @@
               <input
                 type="text"
                 class="m-input input-w-3"
-                v-model="employeeModel.BankName"
+                v-model="employeeModel.bankName"
               />
             </div>
             <div class="prop-item w-205">
@@ -216,7 +215,7 @@
               <input
                 type="text"
                 class="m-input input-w-3"
-                v-model="employeeModel.BankBranchName"
+                v-model="employeeModel.bankBranchName"
               />
             </div>
           </div>
@@ -325,19 +324,19 @@ export default {
   validations() {
     return {
       employeeModel: {
-        EmployeeCode: {
+        employeeCode: {
           required: helpers.withMessage(
             "Mã nhân viên không được để trống",
             required
           ),
         },
-        EmployeeName: {
+        fullName: {
           required: helpers.withMessage(
             "Tên nhân viên không được để trống",
             required
           ),
         },
-        DepartmentId: {
+        departmentId: {
           required: helpers.withMessage("Đơn vị không được để trống", required),
         },
       },
@@ -366,30 +365,25 @@ export default {
      * @param {*} err
      */
     errorMsg(err) {
+      let data = err.response.data;
+      console.log(data);
       if (
-        err.response.data.devMsg.includes(
-          "Mã khách hàng đã tồn tại trong hệ thống"
-        )
-      ) {
-        this.emitter.emit(
-          "showPopup",
-          `Mã nhân viên <${this.employeeModel.EmployeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u###messenger`
-        );
-      } else if (
-        err.response.data.devMsg.includes("Thông tin mã nhân viên không hợp lệ")
+        !data.code &&
+        data.errors.EmployeeCode[0].includes("Mã nhân viên không hợp lệ")
       ) {
         this.emitter.emit(
           "showPopup",
           `Mã nhân viên không hợp lệ.###warning###u###messenger`
         );
       } else if (
-        err.response.data.devMsg.includes(
-          "Ngày sinh không được lớn hơn ngày hiện tại"
+        data.code &&
+        err.response.data.data.msg.includes(
+          "An error occurred while updating the entries. See the inner exception for details."
         )
       ) {
         this.emitter.emit(
           "showPopup",
-          `Ngày sinh không được lớn hơn ngày hiện tại.###warning###u###messenger`
+          `Mã nhân viên <${this.employeeModel.employeeCode}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.###warning###u###messenger`
         );
       }
     },
@@ -401,19 +395,20 @@ export default {
       let newEmployeeCode;
       await EmployeeApi.getNewCode()
         .then((res) => {
-          newEmployeeCode = res.data;
+          newEmployeeCode = res.data.data;
         })
         .catch((err) => {
           console.log(err);
         });
       this.employeeModel = Object.assign({}, EmployeeModel);
-      this.employeeModel.EmployeeCode = newEmployeeCode;
-      this.employeeModel.Gender = 1;
+      this.employeeModel.employeeCode = newEmployeeCode;
+      this.employeeModel.gender = 1;
       this.touched = {
         employeeCode: false,
         employeeName: false,
         departmentId: false,
       };
+      this.reSelectCbb = !this.reSelectCbb;
       this.$refs.txtEmployeeCodeRef.focus();
     },
     async save(modeButton) {
@@ -449,6 +444,7 @@ export default {
             });
           //mode sửa
         } else if (this.mode == "edit") {
+          console.log(this.employeeModel);
           EmployeeApi.update(this.employeeId, this.employeeModel)
             .then(async (res) => {
               console.log(res);
@@ -524,10 +520,10 @@ export default {
     },
     // các hàm sử sụng cho combobox
     comboboxOnSelect(cbbValue) {
-      this.employeeModel.DepartmentId = cbbValue;
+      this.employeeModel.departmentId = cbbValue;
       this.isShowDataCombobox = true;
       this.reSelectCbb = !this.reSelectCbb;
-      this.v$.employee.DepartmentId.$touch();
+      this.v$.employee.departmentId.$touch();
       setTimeout(() => {
         this.touched.departmentId = false;
       }, 210);
@@ -535,7 +531,6 @@ export default {
   },
 
   async created() {
-
     // Lắng nghe sự kiện bấm button X trong form ở mode Edit
     this.emitter.on("confirmToSaveChange", async () => {
       //bắt đầu thực hiện check validate
@@ -567,8 +562,8 @@ export default {
     });
     // lấy danh sách phòng ban và gán cho data listDepartment
     await DepartmentApi.getAll().then((res) => {
-      console.log(res.data);
-      this.listDepartment = res.data;
+      console.log(res.data.data);
+      this.listDepartment = res.data.data;
     });
 
     console.log(this.mode);
@@ -580,10 +575,10 @@ export default {
     if (this.mode == "add") {
       EmployeeApi.getNewCode()
         .then((res) => {
-          let newEmployeeCode = res.data;
-          this.employeeModel.EmployeeCode = newEmployeeCode;
+          let newEmployeeCode = res.data.data;
+          this.employeeModel.employeeCode = newEmployeeCode;
           this.$refs.txtEmployeeCodeRef.focus();
-          this.employeeModel.Gender = 1;
+          this.employeeModel.gender = 1;
         })
         .catch((err) => {
           console.log(err);
@@ -595,10 +590,15 @@ export default {
        */
       console.log("lấy nhân viên có id ", this.employeeId);
       EmployeeApi.getById(this.employeeId).then((res) => {
-        this.employeeModel = res.data;
+        console.log(res);
+        this.employeeModel = res.data.data;
         this.reSelectCbb = !this.reSelectCbb;
-        this.employeeModel.DateOfBirth = this.formatDateToValue(new Date(this.employeeModel.DateOfBirth));
-        this.employeeModel.IdentityDate = this.formatDateToValue(new Date(this.employeeModel.IdentityDate));
+        this.employeeModel.dateOfBirth = this.formatDateToValue(
+          new Date(this.employeeModel.dateOfBirth)
+        );
+        this.employeeModel.identityDate = this.formatDateToValue(
+          new Date(this.employeeModel.identityDate)
+        );
         this.originalModel = Object.assign({}, this.employeeModel);
         this.$refs.txtEmployeeCodeRef.focus();
       });
@@ -607,22 +607,26 @@ export default {
        * đầu vào là mode clone thì lấy mã mới và focus vào mã nhân viên và gọi api lấy mã nhân viên theo Id
        * Author: TrungTQ
        */
-      EmployeeApi.getNewCode()
-        .then((res) => {
-          let newEmployeeCode = res.data;
-          this.employeeModel.EmployeeCode = newEmployeeCode;
-          this.$refs.txtEmployeeCodeRef.focus();
-          this.employeeModel.Gender = 1;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
 
-      EmployeeApi.getById(this.employeeId).then((res) => {
-        this.employeeModel = res.data;
+      EmployeeApi.getById(this.employeeId).then(async (res) => {
+        this.employeeModel = res.data.data;
+        await EmployeeApi.getNewCode()
+          .then((res) => {
+            let newEmployeeCode = res.data.data;
+            this.employeeModel.employeeCode = newEmployeeCode;
+            this.$refs.txtEmployeeCodeRef.focus();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
         this.reSelectCbb = !this.reSelectCbb;
-        this.employeeModel.DateOfBirth = this.formatDateToValue(new Date(this.employeeModel.DateOfBirth));
-        this.employeeModel.IdentityDate = this.formatDateToValue(new Date(this.employeeModel.IdentityDate));
+        this.employeeModel.dateOfBirth = this.formatDateToValue(
+          new Date(this.employeeModel.dateOfBirth)
+        );
+        this.employeeModel.identityDate = this.formatDateToValue(
+          new Date(this.employeeModel.identityDate)
+        );
         this.originalModel = Object.assign({}, this.employeeModel);
       });
     }

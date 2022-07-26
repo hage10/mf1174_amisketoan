@@ -2,21 +2,21 @@
  * Model cho thực thể nhân viên 
  * */
 export const EmployeeModel = {
-    EmployeeCode: '',
-    FullName: '',
-    DateOfBirth: null,
-    Gender: null,
-    DepartmentId: null,
-    DepartmentName: '',
-    IdentityNumber: '',
-    IdentityDate: null,
-    IdentityPlace: '',
-    PositionName: '',
-    Address: '',
-    PhoneNumber: '',
-    TelephoneNumber: '',
-    Email: null,
-    BankAccountNumber: '',
-    BankName: '',
-    BankBranchName: ''
+    employeeCode: '',
+    fullName: '',
+    dateOfBirth: null,
+    gender: null,
+    departmentId: null,
+    departmentName: '',
+    identityNumber: '',
+    identityDate: null,
+    identityPlace: '',
+    positionName: '',
+    address: '',
+    phoneNumber: '',
+    telephoneNumber: '',
+    email: null,
+    bankAccountNumber: '',
+    bankName: '',
+    bankBranchName: ''
 }
